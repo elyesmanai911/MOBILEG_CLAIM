@@ -64,7 +64,6 @@ public class SignUpForm extends BaseForm {
         verifpassword.setSingleLineTextArea(false);
         email.setSingleLineTextArea(false);
         fullname.setSingleLineTextArea(false);
-
         Button next = new Button("Confirmer");
         Button signIn = new Button("Sign In");
         signIn.addActionListener(e -> previous.showBack());
@@ -84,6 +83,7 @@ public class SignUpForm extends BaseForm {
                 new FloatingHint(fullname),
                 createLineSeparator()
         );
+
         content.setScrollableY(true);
         add(BorderLayout.CENTER, content);
         add(BorderLayout.SOUTH, BoxLayout.encloseY(

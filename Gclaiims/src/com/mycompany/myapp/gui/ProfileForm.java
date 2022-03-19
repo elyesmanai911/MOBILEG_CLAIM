@@ -82,19 +82,19 @@ Form current;
                 )
         ));
 
-        TextField username = new TextField("sandeep");
+        TextField username = new TextField(SessionManager.getUserName());
         username.setUIID("TextFieldBlack");
         addStringValue("Username", username);
 
-        TextField email = new TextField("sandeep@gmail.com", "E-Mail", 20, TextField.EMAILADDR);
+        TextField email = new TextField(SessionManager.getEmail(), "E-Mail", 20, TextField.EMAILADDR);
         email.setUIID("TextFieldBlack");
         addStringValue("E-Mail", email);
         
-        TextField password = new TextField("sandeep", "Password", 20, TextField.PASSWORD);
+        TextField password = new TextField(SessionManager.getPassowrd(), "Password", 20, TextField.PASSWORD);
         password.setUIID("TextFieldBlack");
         addStringValue("Password", password);
-        TextField fullname = new TextField("sandeep");
-        username.setUIID("TextFieldBlack");
+        TextField fullname = new TextField(SessionManager.getFullname());
+        fullname.setUIID("TextFieldBlack");
         addStringValue("fullname", fullname);
         Button next = new Button("Créer une equipe");
 addStringValue("", BoxLayout.encloseY(next));
