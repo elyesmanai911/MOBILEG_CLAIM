@@ -132,7 +132,7 @@ public ArrayList<Equipe> Equipes;
        SpanLabel sp = new SpanLabel();
 Equipes=ServiceEquipe.getInstance().getAllHotels();
 for (Equipe e :Equipes)
-{ addButton(res.getImage("news-item-1.jpg"),e.getNomEquipe().toString()+ "\n" +e.getDescription().toString()+ "\n" +e.getChef().toString(), false, 26, 32);
+{ addButton(res.getImage("news-item-1.jpg"),e.getNomEquipe()+ "\n" +e.getDescription()+ "\n" +e.getChef(), false, 26, 32);
       //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
 
       

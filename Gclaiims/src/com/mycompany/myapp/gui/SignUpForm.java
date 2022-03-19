@@ -16,21 +16,26 @@
  * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
  * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
  */
-
 package com.mycompany.myapp.gui;
 
 import com.codename1.components.FloatingHint;
 import com.codename1.ui.Button;
+import com.codename1.ui.Command;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.entities.SimpleUtilisateur;
+import com.mycompany.myapp.services.ServiceUser;
 
 /**
  * Signup UI
@@ -48,30 +53,35 @@ public class SignUpForm extends BaseForm {
         Form previous = Display.getInstance().getCurrent();
         tb.setBackCommand("", e -> previous.showBack());
         setUIID("SignIn");
-                
+
         TextField username = new TextField("", "Username", 20, TextField.ANY);
-        TextField email = new TextField("", "E-Mail", 20, TextField.EMAILADDR);
         TextField password = new TextField("", "Password", 20, TextField.PASSWORD);
-        TextField confirmPassword = new TextField("", "Confirm Password", 20, TextField.PASSWORD);
+        TextField verifpassword = new TextField("", "verifPassword", 20, TextField.PASSWORD);
+        TextField email = new TextField("", "E-Mail", 20, TextField.EMAILADDR);
+        TextField fullname = new TextField("", "Fullname", 20, TextField.ANY);
         username.setSingleLineTextArea(false);
-        email.setSingleLineTextArea(false);
         password.setSingleLineTextArea(false);
-        confirmPassword.setSingleLineTextArea(false);
-        Button next = new Button("Next");
+        verifpassword.setSingleLineTextArea(false);
+        email.setSingleLineTextArea(false);
+        fullname.setSingleLineTextArea(false);
+
+        Button next = new Button("Confirmer");
         Button signIn = new Button("Sign In");
         signIn.addActionListener(e -> previous.showBack());
         signIn.setUIID("Link");
         Label alreadHaveAnAccount = new Label("Already have an account?");
-        
+
         Container content = BoxLayout.encloseY(
                 new Label("Sign Up", "LogoLabel"),
                 new FloatingHint(username),
                 createLineSeparator(),
-                new FloatingHint(email),
-                createLineSeparator(),
                 new FloatingHint(password),
                 createLineSeparator(),
-                new FloatingHint(confirmPassword),
+                new FloatingHint(verifpassword),
+                createLineSeparator(),
+                new FloatingHint(email),
+                createLineSeparator(),
+                new FloatingHint(fullname),
                 createLineSeparator()
         );
         content.setScrollableY(true);
@@ -81,7 +91,35 @@ public class SignUpForm extends BaseForm {
                 FlowLayout.encloseCenter(alreadHaveAnAccount, signIn)
         ));
         next.requestFocus();
-        next.addActionListener(e -> new ActivateForm(res).show());
+
+       
+        next.addActionListener(new ActionListener() {
+       public void actionPerformed(ActionEvent evt) {
+                if ((username.getText().length() == 0) || (email.getText().length() == 0)) {
+                    Dialog.show("Alert", "Please fill all the fields", new Command("OK"));
+                } else {
+                    try {
+                        SimpleUtilisateur h = new SimpleUtilisateur(username.getText(), password.getText().toString(), verifpassword.getText().toString(), email.getText().toString() ,fullname.getText().toString());
+
+                        if (ServiceUser.getInstance().adduser(h)) {
+                            Dialog.show("Success", "Connection accepted", new Command("OK"));
+                        } else {
+                            Dialog.show("ERROR", "Server error", new Command("OK"));
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                }
+
+            }
+        });
+ next.addActionListener(e -> new SignInForm(res).show());
+
     }
-    
+
+
+            
+   
+
 }
