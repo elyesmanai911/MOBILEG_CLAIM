@@ -12,6 +12,7 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.myapp.entities.SimpleUtilisateur;
 import com.mycompany.myapp.entities.Utilisateur;
+import com.mycompany.myapp.gui.SessionManager;
 import com.mycompany.myapp.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -44,6 +45,34 @@ public boolean adduser(SimpleUtilisateur h) {
         System.out.println(h);
         System.out.println("********");
         String url = Statics.BASE_URL + "addusermobile?username=" + h.getUsername() + "&password=" + h.getPassword() + "&verifpassword=" + h.getVerifpassword() + "&email=" + h.getEmail() + "&fullname=" + h.getFullname();
+        //String url = Statics.BASE_URL + "create";
+
+        req.setUrl(url);
+        req.setPost(false);
+
+       req.addArgument("username",h.getUsername());
+       req.addArgument("password", h.getPassword()+"");
+    
+        req.addArgument("verifpassword", h.getVerifpassword()+"");
+            req.addArgument("email", h.getEmail()+"");
+             req.addArgument("fullname", h.getFullname()+"");
+         
+       
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
+public boolean updateuser(SimpleUtilisateur h) {
+        System.out.println(h);
+        System.out.println("********");
+
+        String url = Statics.BASE_URL + "updateusermobile/"+SessionManager.getId()+"?username=" + h.getUsername() + "&password=" + h.getPassword() + "&verifpassword=" + h.getVerifpassword() + "&email=" + h.getEmail() + "&fullname=" + h.getFullname();
         //String url = Statics.BASE_URL + "create";
 
         req.setUrl(url);
