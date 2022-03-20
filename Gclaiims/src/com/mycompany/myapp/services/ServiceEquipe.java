@@ -39,6 +39,36 @@ public class ServiceEquipe {
         }
         return instance;
     }
+
+
+public boolean addequipe(Equipe h) {
+        System.out.println(h);
+        System.out.println("********");
+        String url = Statics.BASE_URL + "ajoutEquipeMobile?nomEquipe=" + h.getNomEquipe()+ "&Etat=" + h.getEtat()+ "&description=" + h.getDescription()+ "&chef=" + h.getChef()+ "&simpleutilisateurs=" + h.getIdUser();
+        //String url = Statics.BASE_URL + "create";
+
+      
+     req.setUrl(url);
+        req.setPost(false);
+
+       req.addArgument("nomEquipe",h.getNomEquipe());
+       req.addArgument("Etat", h.getEtat()+"");
+    
+        req.addArgument("description", h.getDescription()+"");
+            req.addArgument("chef", h.getChef()+"");
+             req.addArgument("simpleutilisateurs", h.getIdUser()+"");
+         
+       
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
 public ArrayList<Equipe> parseEquipes(String jsonText) {
         try {
             Equipes = new ArrayList<>();

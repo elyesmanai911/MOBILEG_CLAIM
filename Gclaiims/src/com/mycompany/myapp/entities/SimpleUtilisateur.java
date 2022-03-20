@@ -15,15 +15,15 @@ public class SimpleUtilisateur extends Utilisateur {
       
     }
 
-    public SimpleUtilisateur(String fullname, int id, String username, String password, String verifpassword, String email) {
+    public SimpleUtilisateur(int id, String username, String password, String verifpassword, String email,String fullname) {
         super(id, username, password, verifpassword, email);
         this.fullname = fullname;
     }
-  public SimpleUtilisateur(String fullname, String username, String password, String verifpassword, String email) {
+  public SimpleUtilisateur(String username, String password, String verifpassword, String email,String fullname) {
         super(username, password, verifpassword, email);
         this.fullname = fullname;
     }
-    public SimpleUtilisateur(String fullname, int id, String username, String password, String verifpassword, String email, String roles, boolean role, boolean isVerfied) {
+    public SimpleUtilisateur(int id, String username, String password, String verifpassword, String email, String roles, boolean role, boolean isVerfied,String fullname) {
         super(id,username, password, verifpassword, email, roles, role, isVerfied);
         this.fullname = fullname;
     }

@@ -102,7 +102,7 @@ public ArrayList<Equipe> Equipes;
         all.setUIID("SelectBar");
         RadioButton Equipe = RadioButton.createToggle("Equipe", barGroup);
         Equipe.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
+        RadioButton popular = RadioButton.createToggle("Tournois", barGroup);
         popular.setUIID("SelectBar");
         RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
         myFavorite.setUIID("SelectBar");
@@ -139,6 +139,10 @@ for (Equipe e :Equipes)
       
 }
  // add(sp);
+    }
+
+    ListEquipeForm(Resources res) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     private void updateArrowPosition(Button b, Label arrow) {

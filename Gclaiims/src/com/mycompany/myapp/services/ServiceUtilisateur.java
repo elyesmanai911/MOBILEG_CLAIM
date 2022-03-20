@@ -21,10 +21,7 @@ import com.mycompany.myapp.utils.Statics;
 import java.util.Map;
 import java.util.Vector;
 
-/**
- *
- * @author Lenovo
- */
+
 public class ServiceUtilisateur {
     
     
@@ -127,7 +124,7 @@ public class ServiceUtilisateur {
               
                  SessionManager.setFullname(user.get("fullname").toString());
                 if(user.size() >0 ) // l9a user
-                   // new ListReclamationForm(rs).show();//yemchi lel list reclamation
+                   
                     new ProfileForm(rs).show();
                     
                     }
