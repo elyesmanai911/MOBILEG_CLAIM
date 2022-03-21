@@ -38,7 +38,18 @@ private int idUser;
         this.chef = chef;
         this.idUser = idUser;
     }
-
+ public Equipe(int id,String nomEquipe, String Description,String Etat) {
+         this.id = id;
+        this.nomEquipe = nomEquipe;
+        this.Description = Description;
+        this.Etat = Etat;
+       
+    }
+public Equipe(int id,int idUser) {
+         this.id = id;
+       this.idUser = idUser;
+       
+    }
     public int getIdUser() {
         return idUser;
     }

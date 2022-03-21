@@ -69,6 +69,53 @@ public boolean addequipe(Equipe h) {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
+public boolean updateequipe(Equipe h) {
+        System.out.println(h);
+        System.out.println("********");
+        String url = Statics.BASE_URL + "updateEquipeMobile/"+h.getId()+"?nomEquipe=" + h.getNomEquipe()+ "&Etat=" + h.getEtat()+ "&description=" + h.getDescription()+ "&chef=" + h.getChef();
+        //String url = Statics.BASE_URL + "create";
+
+      
+     req.setUrl(url);
+        req.setPost(false);
+
+       req.addArgument("nomEquipe",h.getNomEquipe());
+       req.addArgument("Etat", h.getEtat()+"");
+    
+        req.addArgument("description", h.getDescription()+"");
+            
+       
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
+public boolean rejoindreequipe(Equipe h) {
+        System.out.println(h);
+        System.out.println("********");
+        String url = Statics.BASE_URL + "rejoindreequipeMOBILE/"+h.getId()+"?simpleutilisateurs="+ h.getIdUser();
+        //String url = Statics.BASE_URL + "create";
+
+      
+     req.setUrl(url);
+        req.setPost(false);
+
+       req.addArgument("simpleutilisateurs",h.getIdUser()+"");
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
 public ArrayList<Equipe> parseEquipes(String jsonText) {
         try {
             Equipes = new ArrayList<>();

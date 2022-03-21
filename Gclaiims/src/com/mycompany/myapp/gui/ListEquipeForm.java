@@ -8,12 +8,14 @@ import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
+import com.codename1.ui.Command;
 import com.codename1.ui.Component;
 import static com.codename1.ui.Component.BOTTOM;
 import static com.codename1.ui.Component.CENTER;
 import static com.codename1.ui.Component.LEFT;
 import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
@@ -24,6 +26,8 @@ import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -32,7 +36,9 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.entities.Equipe;
+import com.mycompany.myapp.entities.SimpleUtilisateur;
 import com.mycompany.myapp.services.ServiceEquipe;
+import com.mycompany.myapp.services.ServiceUser;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.Map;
@@ -134,9 +140,46 @@ public ArrayList<Equipe> Equipes;
 Equipes=ServiceEquipe.getInstance().getAllHotels();
 for (Equipe e :Equipes)
 { addButton(res.getImage("news-item-1.jpg"),e.getNomEquipe()+ "\n" +e.getDescription()+ "\n" +e.getChef(), false, 26, 32);
-      //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
+    if(e.getEtat().equals("open"))
+    {System.out.println(SessionManager.getId());
+        Button next = new Button("REJOINDRE L'EQUIPE");
+        addStringValue("", BoxLayout.encloseY(next));
+  next.addActionListener(new ActionListener() {
+       public void actionPerformed(ActionEvent evt) {
+                
+                    try {
 
-      
+                        Equipe h = new Equipe(e.getId(),SessionManager.getId());
+
+                        if (ServiceEquipe.getInstance().rejoindreequipe(h)) {
+                            Dialog.show("Success", "Connection accepted", new Command("OK"));
+                        } else {
+                            Dialog.show("ERROR", "Server error", new Command("OK"));
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                }
+
+            
+        });
+    } 
+
+if(SessionManager.getUserName().equals(e.getChef()))
+{Label Modif =new Label("MODIFIER VOTRE EQUIPE");
+Modif.setUIID("NewsTopLine");
+Style modifStyle =new Style(Modif.getUnselectedStyle());
+modifStyle.setFgColor(0xf7ad02);
+FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_MODE_EDIT,modifStyle);
+Modif.setIcon(mfontimage);
+Modif.setTextPosition(LEFT);
+
+
+addStringValue("", BoxLayout.encloseY(Modif));
+Modif.addPointerPressedListener(l->new ModifEquipeForm(res,e).show());
+}
+ 
 }
  // add(sp);
     }
@@ -151,7 +194,12 @@ for (Equipe e :Equipes)
         
         
     }
-    
+    private void addStringValue(String s, Component v) {
+        add(BorderLayout.west(new Label(s, "PaddedLabel")).
+                add(BorderLayout.CENTER, v));
+        add(createLineSeparator(0xeeeeee));
+
+    }
     private void addTab(Tabs swipe, Image img, Label spacer, String likesStr, String commentsStr, String text) {
         int size = Math.min(Display.getInstance().getDisplayWidth(), Display.getInstance().getDisplayHeight());
         if(img.getHeight() < size) {

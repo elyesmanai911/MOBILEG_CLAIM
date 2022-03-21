@@ -7,8 +7,11 @@
             <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/SignUpForm.java</file>
             <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceUser.java</file>
             <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/Equipe.java</file>
+            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ModifEquipeForm.java</file>
+            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ListEquipeForm.java</file>
             <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceEquipe.java</file>
             <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/addEquipeForm.java</file>
+            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ProfileForm.java</file>
         </group>
     </open-files>
 </project-private>
