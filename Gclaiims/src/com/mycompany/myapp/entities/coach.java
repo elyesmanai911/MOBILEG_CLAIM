@@ -22,6 +22,9 @@ public class coach extends Utilisateur {
     public coach(String specialite) {
         this.specialite = specialite;
     }
+ public coach() {
+        
+    }
 
     public coach(String username, String password, String verifpassword, String email,String specialite) {
         super(username, password, verifpassword, email);

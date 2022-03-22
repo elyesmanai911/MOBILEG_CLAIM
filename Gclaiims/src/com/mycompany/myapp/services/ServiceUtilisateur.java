@@ -13,6 +13,7 @@ import com.codename1.ui.ComboBox;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.TextField;
 import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.gui.BackForm;
 import com.mycompany.myapp.gui.ProfileForm;
 
 import com.mycompany.myapp.gui.SessionManager;
@@ -125,7 +126,7 @@ public class ServiceUtilisateur {
                     }
                     if (user.size() > 0 && user.get("roles").toString().equals("[ROLE_ADMIN]")) // l9a user
                     {
-                        new WalkthruForm(rs).show();
+                        new BackForm(rs).show();
                     } else {
                         new ProfileForm(rs).show();
                     }

@@ -18,14 +18,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+import com.mycompany.myapp.entities.coach;
 /**
  *
  * @author souma
  */
 public class ServiceUser {
     public ArrayList<SimpleUtilisateur> users;
-    
+    public ArrayList<coach> coach;
     public static ServiceUser instance=null;
     public boolean resultOK;
     private ConnectionRequest req;
@@ -133,7 +133,7 @@ public boolean updateuser(SimpleUtilisateur h) {
     }
     
     public ArrayList<SimpleUtilisateur> getAllUsers(){
-        String url = Statics.BASE_URL+"/listUsers";
+        String url = Statics.BASE_URL+"listUsers";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -146,6 +146,57 @@ public boolean updateuser(SimpleUtilisateur h) {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return users;
     }
+ public ArrayList<coach> parseEventscoach(String jsonText){
+        try {
+            coach=new ArrayList<>();
+            JSONParser j = new JSONParser();
+            Map<String,Object> tasksListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+            
+             
+            List<Map<String,Object>> list = (List<Map<String,Object>>)tasksListJson.get("root");
+            
+            //Parcourir la liste des tâches Json
+            for(Map<String,Object> obj : list){
+                //Création des tâches et récupération de leurs données
+                coach u = new coach();
+                float id = Float.parseFloat(obj.get("id").toString());
+                u.setId((int)id);
+                u.setUsername(obj.get("username").toString());
+                u.setPassword(obj.get("password").toString());
+                u.setVerifpassword(obj.get("verifpassword").toString()); 
+                u.setEmail(obj.get("email").toString()); 
+                u.setSpecialite(obj.get("specialite").toString()); 
+                coach.add(u);
+            }
+            
+            
+        } catch (IOException ex) {
+            
+        }
+         /*
+            A ce niveau on a pu récupérer une liste des tâches à partir
+        de la base de données à travers un service web
+        
+        */
+        return coach;
+    }
+    
+ public ArrayList<coach> getAllCaoch(){
+        String url = Statics.BASE_URL+"listCoach";
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                coach = parseEventscoach(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return coach;
+    }
+
+
  public void Supprimer(int id) {
         ConnectionRequest con = new ConnectionRequest();
         con.setUrl(Statics.BASE_URL+"/deleteUser/"+id);
@@ -161,5 +212,6 @@ public boolean updateuser(SimpleUtilisateur h) {
     public boolean addUser(SimpleUtilisateur h) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
 
 }

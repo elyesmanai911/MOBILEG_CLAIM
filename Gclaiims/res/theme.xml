@@ -2,6 +2,7 @@
 
 <resource majorVersion="1" minorVersion="11" useXmlUI="false">
     <image name="activation-background.jpg"  />
+    <image name="avatar.png"  />
     <image name="cg-10.jpg"  />
     <image name="cg-5.jpg"  />
     <image name="confirmation-background.jpg"  />

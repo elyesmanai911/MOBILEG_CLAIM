@@ -38,16 +38,16 @@ import com.codename1.ui.util.Resources;
  *
  * @author Shai Almog
  */
-public class BaseForm extends Form {
+public class BaseFormBack extends Form {
 
-    public BaseForm() {
+    public BaseFormBack() {
     }
 
-    public BaseForm(Layout contentPaneLayout) {
+    public BaseFormBack(Layout contentPaneLayout) {
         super(contentPaneLayout);
     }
 
-    public BaseForm(String title, Layout contentPaneLayout) {
+    public BaseFormBack(String title, Layout contentPaneLayout) {
         super(title, contentPaneLayout);
     }
     
@@ -82,8 +82,10 @@ public class BaseForm extends Form {
                         new Label(res.getImage("profile-pic.jpg"), "PictureWhiteBackgrond"))
         ));
         
-        tb.addMaterialCommandToSideMenu("Newsfeed", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
-        tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_SETTINGS, e -> new ProfileForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListUtilisateur", FontImage.MATERIAL_UPDATE, e -> new ListUserBackForm(res).show());
+  tb.addMaterialCommandToSideMenu("ListCoach", FontImage.MATERIAL_UPDATE, e -> new ListCoachBackForm(res).show());
+  tb.addMaterialCommandToSideMenu("ListEquipe", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
+    
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new SignInForm(res).show());
     }
 }
