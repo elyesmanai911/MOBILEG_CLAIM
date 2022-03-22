@@ -151,7 +151,17 @@ for (Utilisateur m :membres)
 addStringValue(m.getEmail(),ss);
 }
     if(e.getEtat().equals("open"))
-    {System.out.println(SessionManager.getId());
+
+    {int verif=0;
+for (Utilisateur m :membres)
+{
+if (m.getEmail().equals(SessionManager.getEmail()))
+{verif=1;
+}
+ }
+if (verif==0)
+{
+        System.out.println(SessionManager.getId());
         Button next = new Button("REJOINDRE L'EQUIPE");
         addStringValue("", BoxLayout.encloseY(next));
   next.addActionListener(new ActionListener() {
@@ -175,7 +185,7 @@ addStringValue(m.getEmail(),ss);
             
         });
     } 
-
+}
 if(SessionManager.getUserName().equals(e.getChef()))
 {Label Modif =new Label("MODIFIER VOTRE EQUIPE");
 Modif.setUIID("NewsTopLine");
