@@ -7,6 +7,7 @@ package com.mycompany.myapp.gui;
 import com.codename1.components.ToastBar;
 import com.codename1.ui.Button;
 import com.codename1.ui.Component;
+import static com.codename1.ui.Component.LEFT;
 import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
 import com.codename1.ui.Display;
@@ -16,6 +17,8 @@ import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Style;
@@ -45,7 +48,26 @@ Label l=new Label("Utilisateur N°"+i++);
 addStringValue("",l);
 addButton(res.getImage("avatar.png"),"FULLNAME="+e.getFullname()+ "\n" +"Email="+e.getEmail()+ "\n" +"USERNAME="+e.getUsername()+ "\n" +"PASSWORD="+e.getVerifpassword()+ "\n", false, 26, 32);
       //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
+  Label Modif =new Label("Supprimer un utilisateur");
+Modif.setUIID("NewsTopLine");
+Style modifStyle =new Style(Modif.getUnselectedStyle());
+modifStyle.setFgColor(0xc24400);
+FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_DELETE,modifStyle);
+Modif.setIcon(mfontimage);
+Modif.setTextPosition(LEFT);
 
+
+addStringValue("", BoxLayout.encloseY(Modif));
+Modif.addPointerPressedListener(new ActionListener() {
+       public void actionPerformed(ActionEvent evt) {
+                
+                    ServiceUser.getInstance().Supprimer(e.getId());
+
+                };
+
+            
+       } );
+Modif.addPointerPressedListener(ll->new ListCoachBackForm(res).show());
       
 }
 

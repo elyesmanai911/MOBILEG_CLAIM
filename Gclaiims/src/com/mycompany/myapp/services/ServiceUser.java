@@ -199,7 +199,7 @@ public boolean updateuser(SimpleUtilisateur h) {
 
  public void Supprimer(int id) {
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl(Statics.BASE_URL+"/deleteUser/"+id);
+        con.setUrl(Statics.BASE_URL+"deleteUser/"+id);
         con.setPost(false);
         con.addResponseListener((evt) -> {
             System.out.println(con.getResponseData());
@@ -211,6 +211,33 @@ public boolean updateuser(SimpleUtilisateur h) {
 
     public boolean addUser(SimpleUtilisateur h) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+public boolean addCoach(coach h) {
+        System.out.println(h);
+        System.out.println("********");
+        String url = Statics.BASE_URL + "addcoachmobile?username=" + h.getUsername() + "&password=" + h.getPassword() + "&verifpassword=" + h.getVerifpassword() + "&email=" + h.getEmail() + "&fullname=" + h.getSpecialite();
+        //String url = Statics.BASE_URL + "create";
+
+        req.setUrl(url);
+        req.setPost(false);
+
+       req.addArgument("username",h.getUsername());
+       req.addArgument("password", h.getPassword()+"");
+    
+        req.addArgument("verifpassword", h.getVerifpassword()+"");
+            req.addArgument("email", h.getEmail()+"");
+             req.addArgument("specialite", h.getSpecialite()+"");
+         
+       
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
     }
 
 

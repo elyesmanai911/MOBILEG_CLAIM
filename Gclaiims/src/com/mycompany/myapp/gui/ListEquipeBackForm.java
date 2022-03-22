@@ -6,11 +6,10 @@ package com.mycompany.myapp.gui;
 
 import com.codename1.components.ToastBar;
 import com.codename1.ui.Button;
-import com.codename1.ui.Command;
 import com.codename1.ui.Component;
+import static com.codename1.ui.Component.LEFT;
 import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
-import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
@@ -27,6 +26,7 @@ import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.entities.Equipe;
 import com.mycompany.myapp.entities.SimpleUtilisateur;
 import com.mycompany.myapp.entities.Tournoi;
+import com.mycompany.myapp.entities.Utilisateur;
 import com.mycompany.myapp.entities.coach;
 import com.mycompany.myapp.services.ServiceEquipe;
 import com.mycompany.myapp.services.ServiceTournoi;
@@ -37,25 +37,41 @@ import java.util.ArrayList;
  *
  * @author souma
  */
-public class ListCoachBackForm extends BaseFormBack{
-public ArrayList<coach> coach;
-    public ListCoachBackForm(Resources res) {
+public class ListEquipeBackForm extends BaseFormBack{
+public ArrayList<Equipe> Equipe;
+public ArrayList<Utilisateur> membres;
+    public ListEquipeBackForm(Resources res) {
         super("ListCoach", BoxLayout.y());
   super.addSideMenu(res);
-  coach=ServiceUser.getInstance().getAllCaoch();
-Label labe=new Label("LISTE DES COACHS ");
-labe.getAllStyles().setFgColor(0xc24400);
+  Equipe=ServiceEquipe.getInstance().getAllHotels();
+Label labe=new Label("LISTE DES EQUIPES ");
 addStringValue("",labe);
 int i=1;
-for (coach e :coach)
-{ 
-Label l=new Label("Coach N°"+i++);
-l.getAllStyles().setFgColor(0x000000);
+for (Equipe e :Equipe)
+{ Label l=new Label("Equipe N°"+i++);
+l.getAllStyles().setFgColor(0xFFA500);
 addStringValue("",l);
-addButton(res.getImage("avatar.png"),"Specialite="+e.getSpecialite()+ "\n" +"Email="+e.getEmail()+ "\n" +"USERNAME="+e.getUsername()+ "\n" +"PASSWORD="+e.getVerifpassword()+ "\n", false, 26, 32);
-      //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
+membres=ServiceEquipe.getInstance().getAllMembreEquipe(e);
+Label xx =new Label("NOM DE L'EQUIPE");
+xx.getAllStyles().setFgColor(0x00000);
+Label qq =new Label("Description");
+qq.getAllStyles().setFgColor(0x00000);
+Label tt =new Label("Etat");
+tt.getAllStyles().setFgColor(0x00000);
 
-  Label Modif =new Label("Supprimer un Coach");
+addStringValue(e.getNomEquipe(),xx);
+addStringValue(e.getDescription(),qq);
+addStringValue(e.getChef(),tt);
+Label us=new Label("Les membres de L'equipe "+e.getNomEquipe() +" sont :");
+us.getAllStyles().setFgColor(0xc24400);
+addStringValue("",us);
+for (Utilisateur m :membres)
+{Label ss=new Label("");
+ss.getAllStyles().setFgColor(0x000080);
+addStringValue(m.getEmail(),ss);
+}
+
+      Label Modif =new Label("Supprimer une Equipe");
 Modif.setUIID("NewsTopLine");
 Style modifStyle =new Style(Modif.getUnselectedStyle());
 modifStyle.setFgColor(0xc24400);
@@ -68,13 +84,13 @@ addStringValue("", BoxLayout.encloseY(Modif));
 Modif.addPointerPressedListener(new ActionListener() {
        public void actionPerformed(ActionEvent evt) {
                 
-                    ServiceUser.getInstance().Supprimer(e.getId());
+                    ServiceEquipe.getInstance().Supprimer(e.getId());
 
                 };
 
             
        } );
-Modif.addPointerPressedListener(ll->new ListCoachBackForm(res).show());
+Modif.addPointerPressedListener(ll->new ListEquipeBackForm(res).show());  
 }
 
 }

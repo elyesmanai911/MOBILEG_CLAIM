@@ -212,5 +212,17 @@ public ArrayList<Utilisateur> parseUSER(String jsonText) {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return Utilisateur;
     }
+
+ public void Supprimer(int id) {
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl(Statics.BASE_URL+"deleteEquipeMobile/"+id);
+        con.setPost(false);
+        con.addResponseListener((evt) -> {
+            System.out.println(con.getResponseData());
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+
+    }
     }
 

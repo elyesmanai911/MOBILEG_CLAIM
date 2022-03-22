@@ -83,9 +83,9 @@ public class BaseFormBack extends Form {
         ));
         
         tb.addMaterialCommandToSideMenu("ListUtilisateur", FontImage.MATERIAL_UPDATE, e -> new ListUserBackForm(res).show());
-  tb.addMaterialCommandToSideMenu("ListCoach", FontImage.MATERIAL_UPDATE, e -> new ListCoachBackForm(res).show());
-  tb.addMaterialCommandToSideMenu("ListEquipe", FontImage.MATERIAL_UPDATE, e -> new NewsfeedForm(res).show());
-    
+        tb.addMaterialCommandToSideMenu("ListCoach", FontImage.MATERIAL_UPDATE, e -> new ListCoachBackForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListEquipe", FontImage.MATERIAL_UPDATE, e -> new ListEquipeBackForm(res).show());
+      tb.addMaterialCommandToSideMenu("Ajouter un coach", FontImage.MATERIAL_ADD, e -> new AddCoachForm(res).show());
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new SignInForm(res).show());
     }
 }
