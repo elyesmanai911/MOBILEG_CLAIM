@@ -116,7 +116,7 @@ public boolean updateuser(SimpleUtilisateur h) {
                 u.setPassword(obj.get("password").toString());
                 u.setVerifpassword(obj.get("verifpassword").toString()); 
                 u.setEmail(obj.get("email").toString()); 
- u.setFullname(obj.get("fullname").toString()); 
+                u.setFullname(obj.get("fullname").toString()); 
                 users.add(u);
             }
             

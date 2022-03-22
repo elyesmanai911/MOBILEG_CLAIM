@@ -37,6 +37,7 @@ import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.entities.Equipe;
 import com.mycompany.myapp.entities.SimpleUtilisateur;
+import com.mycompany.myapp.entities.Utilisateur;
 import com.mycompany.myapp.services.ServiceEquipe;
 import com.mycompany.myapp.services.ServiceUser;
 import java.util.ArrayList;
@@ -46,6 +47,7 @@ import java.util.Map;
 public class ListEquipeForm extends BaseForm{
 Form current;
 public ArrayList<Equipe> Equipes;
+public ArrayList<Utilisateur> membres;
     public ListEquipeForm(Form previous,Resources res) {
         super("ListEquipe", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
@@ -138,8 +140,16 @@ public ArrayList<Equipe> Equipes;
         
        SpanLabel sp = new SpanLabel();
 Equipes=ServiceEquipe.getInstance().getAllHotels();
+int i=1;
 for (Equipe e :Equipes)
-{ addButton(res.getImage("news-item-1.jpg"),e.getNomEquipe()+ "\n" +e.getDescription()+ "\n" +e.getChef(), false, 26, 32);
+{ Label l=new Label("Equipe N°"+i++);
+addStringValue("",l);
+membres=ServiceEquipe.getInstance().getAllMembreEquipe(e);
+addButton(res.getImage("news-item-1.jpg"),e.getNomEquipe()+ "\n" +e.getDescription()+ "\n" +e.getChef(), false, 26, 32);
+for (Utilisateur m :membres)
+{Label ss=new Label("");
+addStringValue(m.getEmail(),ss);
+}
     if(e.getEtat().equals("open"))
     {System.out.println(SessionManager.getId());
         Button next = new Button("REJOINDRE L'EQUIPE");
@@ -177,7 +187,7 @@ Modif.setTextPosition(LEFT);
 
 
 addStringValue("", BoxLayout.encloseY(Modif));
-Modif.addPointerPressedListener(l->new ModifEquipeForm(res,e).show());
+Modif.addPointerPressedListener(ll->new ModifEquipeForm(res,e).show());
 }
  
 }
@@ -271,7 +281,9 @@ Modif.addPointerPressedListener(l->new ModifEquipeForm(res,e).show());
        add(cnt);
        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
    }
-    
+      
+  
+  
     private void bindButtonSelection(Button b, Label arrow) {
         b.addActionListener(e -> {
             if(b.isSelected()) {
