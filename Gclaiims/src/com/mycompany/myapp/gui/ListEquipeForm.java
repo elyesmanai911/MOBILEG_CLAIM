@@ -146,6 +146,8 @@ for (Equipe e :Equipes)
 addStringValue("",l);
 membres=ServiceEquipe.getInstance().getAllMembreEquipe(e);
 addButton(res.getImage("news-item-1.jpg"),e.getNomEquipe()+ "\n" +e.getDescription()+ "\n" +e.getChef(), false, 26, 32);
+Label us=new Label("Les utilisateurs de L'equipe "+e.getNomEquipe());
+addStringValue("",us);
 for (Utilisateur m :membres)
 {Label ss=new Label("");
 addStringValue(m.getEmail(),ss);
