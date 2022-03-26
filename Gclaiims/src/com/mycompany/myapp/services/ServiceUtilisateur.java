@@ -146,7 +146,7 @@ public class ServiceUtilisateur {
     //heki 5dmtha taw nhabtha ala description
     public String getPasswordByEmail(String email, Resources rs) {
 
-        String url = Statics.BASE_URL + "/user/getPasswordByEmail?email=" + email;
+        String url = Statics.BASE_URL + "reset-password/emailMobile?email=" + email;
         req = new ConnectionRequest(url, false); //false ya3ni url mazlt matba3thtich lel server
         req.setUrl(url);
 
