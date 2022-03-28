@@ -1,7 +1,6 @@
 package com.mycompany.myapp;
 
 
-import com.mycompany.myapp.gui.WalkthruForm;
 import static com.codename1.ui.CN.*;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
