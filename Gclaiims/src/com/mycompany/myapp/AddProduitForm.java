@@ -5,9 +5,11 @@
  */
 package com.mycompany.myapp;
 
+import com.codename1.components.MultiButton;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
+import com.codename1.ui.ComboBox;
 import com.codename1.ui.Command;
 import com.codename1.ui.Component;
 import static com.codename1.ui.Component.BOTTOM;
@@ -30,9 +32,15 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.LayeredLayout;
+import com.codename1.ui.list.GenericListCellRenderer;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.Entities.Categorie;
+import com.mycompany.myapp.Services.ServiceCategorie;
 import com.mycompany.myapp.Services.ServiceProduit;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -40,7 +48,16 @@ import com.mycompany.myapp.Services.ServiceProduit;
  * @author user
  */
 public class AddProduitForm extends BaseForm {
-
+           ArrayList<Categorie> list;
+ 
+              
+    private Map<String, Object> createListEntry(String name, String date) {
+    Map<String, Object> entry = new HashMap<>();
+    entry.put("Line1", name);
+    entry.put("Line2", date);
+    return entry;
+}
+ 
     public AddProduitForm(Form previous,Resources res) {
          super("Artwork", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
@@ -98,12 +115,29 @@ public class AddProduitForm extends BaseForm {
         swipe.hideTabs();
               setTitle("Add Artwork");
         setLayout(BoxLayout.yCenter());
+        
+        System.out.println(ServiceCategorie.getInstance().getAllOeuvres());
+                
         TextField tfNomProd = new TextField(""," Nom produit ");
         TextField tfdesc = new TextField("","Description ");
 //        TextField tfImageOeuvre = new TextField("","Oeuvre Image ");
     //    TextField tfNomCat= new TextField("", "Oeuvre Category");
         TextField tfprix= new TextField("", " Prix");
         TextField tfqte= new TextField("", " quantite");
+        Form hi = new Form("ComboBox", new BoxLayout(BoxLayout.Y_AXIS));
+         list = new ArrayList<>();
+          list = ServiceCategorie.getInstance().getAllOeuvres();
+        ComboBox<Map<String, Object>> combo = new ComboBox<> (
+                 
+     
+       
+
+                list.forEach( e -> {
+                    createListEntry("A Game of Thrones", "1996");
+               }));
+  
+  combo.setRenderer(new GenericListCellRenderer<>(new MultiButton(), new MultiButton()));
+  hi.show();
 
 //        TextField tfID_Artiste = new TextField("","Artist ID");
         Button btnValider = new Button("Add Produit");
@@ -127,7 +161,7 @@ public class AddProduitForm extends BaseForm {
   Dialog.show("Success","Connection accepted",new Command("OK"));
                  }}
         });
-      addAll(tfNomProd,tfdesc,tfprix,tfqte,btnValider);
+      addAll(tfNomProd,tfdesc,tfprix,tfqte,combo,btnValider);
          getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e-> previous.showBack());
     
     }

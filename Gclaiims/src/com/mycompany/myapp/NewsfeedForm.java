@@ -42,7 +42,12 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
-
+import com.mycompany.myapp.Services.ServiceProduit;
+import com.mycompany.myapp.entities.Produit;
+import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.io.IOException;
+import java.io.OutputStream;
 /**
  * The newsfeed form
  *
@@ -138,10 +143,15 @@ public class NewsfeedForm extends BaseForm {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
         
-        addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 26, 32);
-        addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21);
-        addButton(res.getImage("news-item-3.jpg"), "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15);
-        addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9);
+        ArrayList<Produit> list;
+        list = new ArrayList<>();
+        list = ServiceProduit.getInstance().getAllOeuvres();
+         for ( Produit p : list) {
+        addButton(res.getImage("news-item-1.jpg"), p.getNom_produit(), false,  p.getQte_produit(), p.getNbr_vu());
+        SpanLabel spl2 = new SpanLabel("Product price: " + "  " + p.getPrix_produit()); 
+        Button AddToCart = new Button("Add to cart");
+        addAll(spl2,AddToCart);
+         }
     }
     
     private void updateArrowPosition(Button b, Label arrow) {
