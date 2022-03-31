@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.myapp.Services;
+package com.mycompany.myapp.services;
 
 import com.codename1.io.CharArrayReader;
 import com.codename1.io.ConnectionRequest;
@@ -13,6 +13,7 @@ import com.codename1.io.NetworkManager;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.myapp.entities.Produit;
+import com.mycompany.myapp.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
