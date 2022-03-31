@@ -36,7 +36,13 @@ import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.entities.Equipe;
 import com.mycompany.myapp.services.ServiceEquipe;
 import com.mycompany.myapp.services.ServiceUtilisateur;
+import com.sun.mail.smtp.SMTPTransport;
 import java.util.Date;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 /**
  * Sign in UI
@@ -45,6 +51,7 @@ import java.util.Date;
  */
 public class MDPoublieForm extends BaseForm {
 Form current;
+TextField username;
     public MDPoublieForm(Resources res) {
         super(new BorderLayout());
 
@@ -58,7 +65,7 @@ Form current;
 
         add(BorderLayout.NORTH, new Label(res.getImage("Logo.png"), "LogoLabel"));
 
-        TextField username = new TextField("", "Votre Email", 20, TextField.ANY);
+         username = new TextField("", "Votre Email", 20, TextField.ANY);
        
         username.setSingleLineTextArea(false);
       
@@ -80,7 +87,8 @@ Form current;
                 } else {
                    
              ServiceUtilisateur.getInstance().getPasswordByEmail(username.getText(),res);
-                        
+ Dialog.show("Alert", "Verifier Votre mail ", new Command("OK"));
+                        new SignInForm(res).show();
 
  }
             } catch (Exception e1) {
@@ -88,8 +96,33 @@ Form current;
             }
         }
         );
-signIn.addActionListener(ee
-                -> new SignInForm(res).show());
+
     }
+public void sendMail(Resources res)
+{
+try{
+
+Properties props=new Properties();
+props.put("mail.transport.protocol","smtp");
+props.put("mail.smtps.host","smtp.gmail.com");
+props.put("mail.smtps.auth","true");
+Session session =Session.getInstance(props,null);
+MimeMessage msg =new MimeMessage(session);
+msg.setFrom(new InternetAddress("Reintialisation mot de passe"));
+msg.setRecipients(Message.RecipientType.TO, username.getText().toString());
+msg.setSubject("Your password reset request");
+msg.setSentDate(new Date(System.currentTimeMillis()));
+   String mp =ServiceUtilisateur.getInstance().getPasswordByEmail(username.getText(),res);
+String txt="voici votre mot de passe:"+mp+"Cordialement Gclaim by BITS&BYTES";
+msg.setText(txt);
+SMTPTransport st=(SMTPTransport)session.getTransport("smtps");
+st.connect("smtp.gmail.com",465,"gclaimpidev@gmail.com","Gclaim2022");
+st.sendMessage(msg,msg.getAllRecipients());
+    System.out.println("server response:"+st.getLastServerResponse());
+
+}catch(Exception e)
+{e.printStackTrace();
+}
+}
 
 }
