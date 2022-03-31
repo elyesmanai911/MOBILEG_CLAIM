@@ -13,6 +13,7 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
+import com.mycompany.myapp.entities.Utilisateur;
 import com.mycompany.myapp.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.Map;
  */
 public class ServiceEquipe {
   public ArrayList<Equipe> Equipes;
-
+public ArrayList<Utilisateur> Utilisateur;
     public static ServiceEquipe instance = null;
     public boolean resultOK;
     private ConnectionRequest req;
@@ -38,6 +39,83 @@ public class ServiceEquipe {
             instance = new ServiceEquipe();
         }
         return instance;
+    }
+
+
+public boolean addequipe(Equipe h) {
+        System.out.println(h);
+        System.out.println("********");
+        String url = Statics.BASE_URL + "ajoutEquipeMobile?nomEquipe=" + h.getNomEquipe()+ "&Etat=" + h.getEtat()+ "&description=" + h.getDescription()+ "&chef=" + h.getChef()+ "&simpleutilisateurs=" + h.getIdUser();
+        //String url = Statics.BASE_URL + "create";
+
+      
+     req.setUrl(url);
+        req.setPost(false);
+
+       req.addArgument("nomEquipe",h.getNomEquipe());
+       req.addArgument("Etat", h.getEtat()+"");
+    
+        req.addArgument("description", h.getDescription()+"");
+            req.addArgument("chef", h.getChef()+"");
+             req.addArgument("simpleutilisateurs", h.getIdUser()+"");
+         
+       
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
+public boolean updateequipe(Equipe h) {
+        System.out.println(h);
+        System.out.println("********");
+        String url = Statics.BASE_URL + "updateEquipeMobile/"+h.getId()+"?nomEquipe=" + h.getNomEquipe()+ "&Etat=" + h.getEtat()+ "&description=" + h.getDescription()+ "&chef=" + h.getChef();
+        //String url = Statics.BASE_URL + "create";
+
+      
+     req.setUrl(url);
+        req.setPost(false);
+
+       req.addArgument("nomEquipe",h.getNomEquipe());
+       req.addArgument("Etat", h.getEtat()+"");
+    
+        req.addArgument("description", h.getDescription()+"");
+            
+       
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
+public boolean rejoindreequipe(Equipe h) {
+        System.out.println(h);
+        System.out.println("********");
+        String url = Statics.BASE_URL + "rejoindreequipeMOBILE/"+h.getId()+"?simpleutilisateurs="+ h.getIdUser();
+        //String url = Statics.BASE_URL + "create";
+
+      
+     req.setUrl(url);
+        req.setPost(false);
+
+       req.addArgument("simpleutilisateurs",h.getIdUser()+"");
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
     }
 public ArrayList<Equipe> parseEquipes(String jsonText) {
         try {
@@ -88,6 +166,63 @@ public ArrayList<Equipe> parseEquipes(String jsonText) {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return Equipes;
+    }
+public ArrayList<Utilisateur> parseUSER(String jsonText) {
+        try {
+            Utilisateur = new ArrayList<>();
+            JSONParser j = new JSONParser();
+            Map<String, Object> UserListJson
+                    = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+
+            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) UserListJson.get("root");
+            for(Map<String,Object> obj :list){
+           
+                Utilisateur h = new Utilisateur();
+
+                h.setEmail(obj.get("email").toString());
+               
+            
+               
+
+              //  h.setDateCreation((Date) Date.parseDate(obj.get("DateCreation").toString()));
+               
+
+                Utilisateur.add(h);
+            }
+
+        } catch (IOException ex) {
+
+        }
+        return Utilisateur;
+    }
+ public ArrayList<Utilisateur> getAllMembreEquipe(Equipe e) {
+        
+ req = new ConnectionRequest();
+        String url = Statics.BASE_URL +"MemebreEQuipe/"+e.getId();
+        System.out.println("===>" + url);
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                Utilisateur = parseUSER(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return Utilisateur;
+    }
+
+ public void Supprimer(int id) {
+        ConnectionRequest con = new ConnectionRequest();
+        con.setUrl(Statics.BASE_URL+"deleteEquipeMobile/"+id);
+        con.setPost(false);
+        con.addResponseListener((evt) -> {
+            System.out.println(con.getResponseData());
+
+        });
+        NetworkManager.getInstance().addToQueueAndWait(con);
+
     }
     }
 
