@@ -23,6 +23,7 @@ import com.codename1.ui.Button;
 import com.codename1.ui.CheckBox;
 import com.codename1.ui.Command;
 import com.codename1.ui.Component;
+import static com.codename1.ui.Component.BOTTOM;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.Form;
@@ -39,7 +40,10 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.entities.Equipe;
+import com.mycompany.myapp.entities.Profil;
 import com.mycompany.myapp.entities.SimpleUtilisateur;
+import com.mycompany.myapp.services.ServiceProfil;
 import com.mycompany.myapp.services.ServiceUser;
 
 /**
@@ -47,16 +51,16 @@ import com.mycompany.myapp.services.ServiceUser;
  *
  * @author Shai Almog
  */
-public class ProfileForm extends BaseForm {
+public class ModifProfilForm extends BaseForm {
 
     Form current;
 
-    public ProfileForm(Resources res) {
+    public ModifProfilForm(Resources res,Profil equi) {
         super("Newsfeed", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Profile");
+        setTitle("MODIFIER PROFIL");
         getContentPane().setScrollVisible(false);
 
         super.addSideMenu(res);
@@ -64,7 +68,7 @@ public class ProfileForm extends BaseForm {
         tb.addSearchCommand(e -> {
         });
 
-        Image img = res.getImage("profile-background.jpg");
+        Image img = res.getImage("news-item-1.jpg");
         if (img.getHeight() > Display.getInstance().getDisplayHeight() / 3) {
             img = img.scaledHeight(Display.getInstance().getDisplayHeight() / 3);
         }
@@ -72,75 +76,56 @@ public class ProfileForm extends BaseForm {
         sl.setUIID("BottomPad");
         sl.setBackgroundType(Style.BACKGROUND_IMAGE_SCALED_FILL);
 
-        Label facebook = new Label("786 followers", res.getImage("facebook-logo.png"), "BottomPad");
-        Label twitter = new Label("486 followers", res.getImage("twitter-logo.png"), "BottomPad");
-        facebook.setTextPosition(BOTTOM);
-        twitter.setTextPosition(BOTTOM);
-
-        add(LayeredLayout.encloseIn(
-                sl,
-                BorderLayout.south(
-                        GridLayout.encloseIn(3,
-                                facebook,
-                                FlowLayout.encloseCenter(
-                                        new Label(res.getImage("profile-pic.jpg"), "PictureWhiteBackgrond")),
-                                twitter
-                        )
-                )
-        ));
-
-        TextField username = new TextField(SessionManager.getUserName());
+   
+        TextField username = new TextField(equi.getUsername());
         username.setUIID("TextFieldBlack");
-        addStringValue("Username", username);
+        addStringValue("username", username);
 
-        TextField email = new TextField(SessionManager.getEmail(), "E-Mail", 20, TextField.EMAILADDR);
-        email.setUIID("TextFieldBlack");
-        addStringValue("E-Mail", email);
+        TextField description = new TextField(equi.getDescription());
+       description.setUIID("TextFieldBlack");
+        addStringValue("Description", description);
 
-        TextField password = new TextField(SessionManager.getPassowrd(), "Password", 20, TextField.PASSWORD);
-        password.setUIID("TextFieldBlack");
-        addStringValue("Password", password);
- TextField verifpassword = new TextField(SessionManager.getPassowrd(), "VerifPassword", 20, TextField.PASSWORD);
+        TextField game = new TextField(equi.getgame());
+        game.setUIID("TextFieldBlack");
+        addStringValue("game", game);
         
-        TextField fullname = new TextField(SessionManager.getFullname());
-        fullname.setUIID("TextFieldBlack");
-        addStringValue("fullname", fullname);
-        Button modif = new Button("modifier votre profile");
-        Button next = new Button("Créer une equipe");
-Button coach = new Button("Devenir un Coach");
- Button panier = new Button("panier");
-        addStringValue("", BoxLayout.encloseY(next));
+       TextField numero = new TextField(equi.getnumero());
+        numero.setUIID("TextFieldBlack");
+        addStringValue("Numero", numero);
+        
+        Button modif = new Button("modifier votre Profil de coach");
+        
         addStringValue("", BoxLayout.encloseY(modif));
-addStringValue("", BoxLayout.encloseY(coach));
- addStringValue("", BoxLayout.encloseY(panier));
-        next.addActionListener(e -> new addEquipeForm(res).show());
+       
   modif.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent evt) {
-                if ((username.getText().length() == 0) || (email.getText().length() == 0)) {
+                    try {
+                if ((username.getText().equals("")) || (game.getText().equals("")) || (description.getText().equals(""))) {
                     Dialog.show("Alert", "Please fill all the fields", new Command("OK"));
                 } else {
-                    try {
-                        SimpleUtilisateur h = new SimpleUtilisateur(username.getText(), password.getText().toString(), password.getText().toString(), email.getText().toString() ,fullname.getText().toString());
+                  System.out.println(Integer.parseInt(numero.getText()));
+                  Profil eq=new Profil(equi.getId(),description.getText(),username.getText(),game.getText(),Integer.parseInt(numero.getText()));
+                                  System.out.println("BBBBBBBBBBBBBBBBBBB");
 
-                        if (ServiceUser.getInstance().updateuser(h)) {
+
+                    System.out.println("data profil =="+eq);
+                         if (ServiceProfil.getInstance().modifprofil(eq)) {
+                              
                             Dialog.show("Success", "Connection accepted", new Command("OK"));
                         } else {
+                     
+
                             Dialog.show("ERROR", "Server error", new Command("OK"));
                         }
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
 
-                }
+ }
+            } catch (Exception e1) {
+                System.out.println(e1.getMessage());
+            }
 
             }
         });
-
-                    panier.addActionListener( (e) -> {
-            new PanierForm(current,res).show();
-
-        });
-  coach.addActionListener(e -> new addProfilForm(res).show());
+modif.addActionListener(l->new ProfilForm(current,res).show());
 }
 
     private void addStringValue(String s, Component v) {

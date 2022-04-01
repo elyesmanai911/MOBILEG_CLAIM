@@ -93,6 +93,8 @@ public class BaseFormBack extends Form {
         tb.addMaterialCommandToSideMenu("ListCommande", FontImage.MATERIAL_VIEW_LIST, e -> new ListCommandeBackForm(res).show());
 tb.addMaterialCommandToSideMenu("ListTournoi", FontImage.MATERIAL_VIEW_LIST, e -> new ListTournoiBackForm(res).show());
         tb.addMaterialCommandToSideMenu("ListJeu", FontImage.MATERIAL_VIEW_LIST, e -> new ListJeuBackForm(res).show());
+  tb.addMaterialCommandToSideMenu("ListRdv", FontImage.MATERIAL_VIEW_LIST, e -> new ListRdvBackForm(res).show());
+
         tb.addMaterialCommandToSideMenu("ListProduit", FontImage.MATERIAL_VIEW_LIST, e -> {
             try {
                 new ListProductsForm(this.getComponentForm(),res).show();

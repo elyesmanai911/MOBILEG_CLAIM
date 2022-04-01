@@ -128,13 +128,15 @@ public class NewsfeedForm extends BaseForm {
         Equipe.setUIID("SelectBar");
         RadioButton Tournoi = RadioButton.createToggle("Tournoi", barGroup);
         Tournoi.setUIID("SelectBar");
-        RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
-        myFavorite.setUIID("SelectBar");
+        RadioButton Coach = RadioButton.createToggle("Coach", barGroup);
+        Coach.setUIID("SelectBar");
+        RadioButton Article = RadioButton.createToggle("Article", barGroup);
+        Article.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
        
         Equipe.setUIID("SelectBar");
         add(LayeredLayout.encloseIn(
-               GridLayout.encloseIn(4, all, Equipe,Tournoi, myFavorite),
+               GridLayout.encloseIn(4, all, Equipe,Tournoi, Coach,Article),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -147,14 +149,28 @@ public class NewsfeedForm extends BaseForm {
         bindButtonSelection(all, arrow);
         bindButtonSelection(Equipe, arrow);
         bindButtonSelection(Tournoi, arrow);
-        bindButtonSelection(myFavorite, arrow);
-        
+        bindButtonSelection(Coach, arrow);
+          bindButtonSelection(Article, arrow);
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-       
+     
+        Equipe.addActionListener( (e) -> {
+            new ListEquipeForm(current,res).show();
+
+        });
+        Tournoi.addActionListener( (e) -> {
+            new ListTournoiForm(current,res).show();
+
+        });
+Coach.addActionListener( (e) -> {
+            new ProfilForm(current,res).show();
+
+        });
+
+  
 
 
         ArrayList<Produit> list;
@@ -195,14 +211,6 @@ AddToCart1.addPointerPressedListener(new ActionListener() {
        
          
 }
-        Equipe.addActionListener( (e) -> {
-            new ListEquipeForm(current,res).show();
-
-        });
-        Tournoi.addActionListener( (e) -> {
-            new ListTournoiForm(current,res).show();
-
-        });
     }
     
     private void updateArrowPosition(Button b, Label arrow) {

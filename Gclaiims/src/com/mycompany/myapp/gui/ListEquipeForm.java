@@ -63,9 +63,8 @@ public ArrayList<Utilisateur> membres;
 
         Label spacer1 = new Label();
         Label spacer2 = new Label();
-       addTab(swipe, res.getImage("cg-5.jpg"), spacer1, "15 Likes  ", "85 Comments", "Rejoindre une équipe pour participer aux tournois ");
+        addTab(swipe, res.getImage("cg-5.jpg"), spacer1, "15 Likes  ", "85 Comments", "Rejoindre une équipe pour participer aux tournois ");
         addTab(swipe, res.getImage("cg-10.jpg"), spacer2, "100 Likes  ", "66 Comments", "les Equipes de GCLAIM");
-        
                 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -110,33 +109,49 @@ public ArrayList<Utilisateur> membres;
         all.setUIID("SelectBar");
         RadioButton Equipe = RadioButton.createToggle("Equipe", barGroup);
         Equipe.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Tournois", barGroup);
-        popular.setUIID("SelectBar");
-        RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
-        myFavorite.setUIID("SelectBar");
+        RadioButton Tournoi = RadioButton.createToggle("Tournoi", barGroup);
+        Tournoi.setUIID("SelectBar");
+        RadioButton Coach = RadioButton.createToggle("Coach", barGroup);
+        Coach.setUIID("SelectBar");
+        RadioButton Article = RadioButton.createToggle("Article", barGroup);
+        Article.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
-        
+       
+        Equipe.setUIID("SelectBar");
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all, Equipe, popular, myFavorite),
+               GridLayout.encloseIn(4, all, Equipe,Tournoi, Coach,Article),
                 FlowLayout.encloseBottom(arrow)
         ));
         
-        Equipe.setSelected(true);
+        all.setSelected(true);
         arrow.setVisible(false);
         addShowListener(e -> {
             arrow.setVisible(true);
-            updateArrowPosition(Equipe, arrow);
+            updateArrowPosition(all, arrow);
         });
         bindButtonSelection(all, arrow);
         bindButtonSelection(Equipe, arrow);
-        bindButtonSelection(popular, arrow);
-        bindButtonSelection(myFavorite, arrow);
+        bindButtonSelection(Tournoi, arrow);
+        bindButtonSelection(Coach, arrow);
+          bindButtonSelection(Article, arrow);
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-        
+     
+        Equipe.addActionListener( (e) -> {
+            new ListEquipeForm(current,res).show();
+
+        });
+        Tournoi.addActionListener( (e) -> {
+            new ListTournoiForm(current,res).show();
+
+        });
+Coach.addActionListener( (e) -> {
+            new ProfilForm(current,res).show();
+
+        });
         
        SpanLabel sp = new SpanLabel();
 Equipes=ServiceEquipe.getInstance().getAllHotels();

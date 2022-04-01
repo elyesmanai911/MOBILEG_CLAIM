@@ -31,23 +31,28 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
-import com.mycompany.myapp.entities.Tournoi;
-import com.mycompany.myapp.services.ServiceTournoi;
+import com.mycompany.myapp.entities.Profil;
+import com.mycompany.myapp.services.ServiceProfil;
+import com.mycompany.myapp.entities.Rdv;
+import com.mycompany.myapp.services.ServiceRdv;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.Map;
-import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
-public class ListTournoiForm extends BaseForm{
+import com.codename1.ui.events.ActionEvent;
+
+
+public class ProfilForm extends BaseForm{
 Form current;
-public ArrayList<Tournoi> Tournois;
-    public ListTournoiForm(Form previous,Resources res) {
-        super("ListTournoi", BoxLayout.y());
+public ArrayList<Profil> Profils;
+    public ProfilForm(Form previous,Resources res) {
+        super("ListProfil", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Liste Tournoi");
+        setTitle("Liste Profil");
         getContentPane().setScrollVisible(false);
+        
         super.addSideMenu(res);
         tb.addSearchCommand(e -> {});
         
@@ -144,41 +149,52 @@ Coach.addActionListener( (e) -> {
             new ProfilForm(current,res).show();
 
         });
-        
        SpanLabel sp = new SpanLabel();
-       Tournois=ServiceTournoi.getInstance().getAllHotels();
-for (Tournoi e :Tournois)
-{ addButton(res.getImage("news-item-1.jpg"),e.getNomTournoi()+ "\n" +e.getDescription()+ "\n" , false, 26, 32);
+Profils=ServiceProfil.getInstance().getAllcoachs();
+for (Profil e :Profils)
+{ addButton(res.getImage("news-item-1.jpg"),e.getUsername().toString()+ "\n" +e.getDescription().toString()+ "\n" +Integer.toString(e.getnumero())+ "\n", false, 26, 32);
       //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
-            Label Modif =new Label("Rejoindre un Tournoi");
+ 
+System.out.println(e.getUsername());
+System.out.println(e.getgame());
+  System.out.println(SessionManager.getId());
+ System.out.println(e.getnumero());
 
-     Modif.setUIID("NewsTopLine");
+   
+ // add(sp);
+if(SessionManager.getUserName().equals(e.getUsername()) )
+{
+ Label Modif =new Label("MODIFIER VOTRE Profile ");
+Modif.setUIID("NewsTopLine");
 Style modifStyle =new Style(Modif.getUnselectedStyle());
-modifStyle.setFgColor(0xc24400);
-FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_ADD,modifStyle);
+modifStyle.setFgColor(0xf7ad02);
+FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_MODE_EDIT,modifStyle);
 Modif.setIcon(mfontimage);
 Modif.setTextPosition(LEFT);
+
+
 addStringValue("", BoxLayout.encloseY(Modif));
-
-Modif.addPointerPressedListener(new ActionListener() {
-       public void actionPerformed(ActionEvent evt) {
-                
-                    ServiceTournoi.getInstance().rejoindre(e.getId(),SessionManager.getId());
-
-                };
-
-            
-       } );
-      
+Modif.addPointerPressedListener(ll->new ModifProfilForm(res,e).show());
 }
- // add(sp);
-    }
-      private void addStringValue(String s, Component v) {
-        add(BorderLayout.west(new Label(s, "PaddedLabel")).
-                add(BorderLayout.CENTER, v));
-        add(createLineSeparator(0xeeeeee));
+else 
+{
+     System.out.println("fffffff");
+    Label Modif =new Label("Reservez un rendez-vous");
+Modif.setUIID("NewsTopLine");
+Style modifStyle =new Style(Modif.getUnselectedStyle());
+modifStyle.setFgColor(0xf7ad02);
+FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_MODE_EDIT,modifStyle);
+Modif.setIcon(mfontimage);
+Modif.setTextPosition(LEFT);
 
+
+addStringValue("", BoxLayout.encloseY(Modif));
+Modif.addPointerPressedListener(ll->new addRdvForm(res,e).show());
+}
+}
+ 
     }
+    
     private void updateArrowPosition(Button b, Label arrow) {
         arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);
         arrow.getParent().repaint();
@@ -264,5 +280,12 @@ Modif.addPointerPressedListener(new ActionListener() {
                 updateArrowPosition(b, arrow);
             }
         });
+    }
+
+       private void addStringValue(String s, Component v) {
+        add(BorderLayout.west(new Label(s, "PaddedLabel")).
+                add(BorderLayout.CENTER, v));
+        add(createLineSeparator(0xeeeeee));
+
     }
 }
