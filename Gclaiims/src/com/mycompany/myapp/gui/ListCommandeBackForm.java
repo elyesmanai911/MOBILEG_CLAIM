@@ -52,7 +52,7 @@ addButton(res.getImage("avatar.png"),"Specialite="+c.getId()+ "\n" +"Email="+c.g
 Modif.setUIID("NewsTopLine");
 Style modifStyle =new Style(Modif.getUnselectedStyle());
 modifStyle.setFgColor(0xc24400);
-FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_DELETE,modifStyle);
+FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_EDIT,modifStyle);
 Modif.setIcon(mfontimage);
 Modif.setTextPosition(LEFT);
 
@@ -72,7 +72,7 @@ Label PDF =new Label("Send Pdf");
 PDF.setUIID("NewsTopLine");
 Style modifStyles =new Style(PDF.getUnselectedStyle());
 modifStyle.setFgColor(0xc24400);
-FontImage mfontimages=FontImage.createMaterial(FontImage.MATERIAL_DELETE,modifStyles);
+FontImage mfontimages=FontImage.createMaterial(FontImage.MATERIAL_SEND,modifStyles);
 PDF.setIcon(mfontimages);
 PDF.setTextPosition(LEFT);
 

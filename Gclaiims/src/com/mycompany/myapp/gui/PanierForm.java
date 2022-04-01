@@ -150,21 +150,12 @@ for (Panier p :Panier)
     System.out.println("panier FORM ==="+p);
     addButton(res.getImage("news-item-1.jpg"),p.getProduit()+ "\n" +p.getQuantite()+ p.getTotal() , false, 26, 32);
       //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
-      Label Ajout =new Label("Plus ");
-Ajout.setUIID("NewsTopLine");
-Style modifStyle =new Style(Ajout.getUnselectedStyle());
-modifStyle.setFgColor(0xf7ad02);
-FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_ADD,modifStyle);
-Ajout.setIcon(mfontimage);
-Ajout.setTextPosition(LEFT);
-
-
-addStringValue("", BoxLayout.encloseY(Ajout));
-Ajout.addPointerPressedListener(ll->new PanierForm(current,res).show());
+  
       Button add = new Button("Add");
        Button minus = new Button("Minus"); 
-        Button delete = new Button("delete");
-        addAll(add,minus,delete);
+
+       // Button delete = new Button("delete");
+        addAll(add,minus/*,delete*/);
   add.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent evt) {
                 
@@ -185,7 +176,7 @@ Ajout.addPointerPressedListener(ll->new PanierForm(current,res).show());
 
             
         });
-  delete.addActionListener(new ActionListener() {
+  /*delete.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent evt) {
                 
                     try {
@@ -204,7 +195,7 @@ Ajout.addPointerPressedListener(ll->new PanierForm(current,res).show());
                 }
 
             
-        });
+        });*/
   minus.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent evt) {
                 

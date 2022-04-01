@@ -165,9 +165,17 @@ public class NewsfeedForm extends BaseForm {
         SpanLabel spl2 = new SpanLabel("Product price: " + "  " + p.getPrix_produit()); 
         Button AddToCart = new Button("Add to cart");
         addAll(spl2,AddToCart);
+Label AddToCart1 =new Label("ajouter au panier");
+AddToCart1.setUIID("NewsTopLine");
+Style modifStyle =new Style(AddToCart1.getUnselectedStyle());
+modifStyle.setFgColor(0xf7ad02);
+FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_MODE_EDIT,modifStyle);
+AddToCart1.setIcon(mfontimage);
+AddToCart1.setTextPosition(LEFT);
 
-         
-        AddToCart.addActionListener(new ActionListener() {
+
+addStringValue("", BoxLayout.encloseY(AddToCart1));
+AddToCart1.addPointerPressedListener(new ActionListener() {
        public void actionPerformed(ActionEvent evt) {
                 
                     try {
@@ -185,6 +193,7 @@ public class NewsfeedForm extends BaseForm {
 
             
         });
+       
          
 }
         Equipe.addActionListener( (e) -> {
@@ -203,7 +212,12 @@ public class NewsfeedForm extends BaseForm {
         
         
     }
-    
+     private void addStringValue(String s, Component v) {
+        add(BorderLayout.west(new Label(s, "PaddedLabel")).
+                add(BorderLayout.CENTER, v));
+        add(createLineSeparator(0xeeeeee));
+
+    }
     private void addTab(Tabs swipe, Image img, Label spacer, String likesStr, String commentsStr, String text) {
         int size = Math.min(Display.getInstance().getDisplayWidth(), Display.getInstance().getDisplayHeight());
         if(img.getHeight() < size) {
