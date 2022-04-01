@@ -156,7 +156,10 @@ public class NewsfeedForm extends BaseForm {
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-     
+         Article.addActionListener( (e) -> {
+            new ArticleForm(current,res).show();
+
+        });
         Equipe.addActionListener( (e) -> {
             new ListEquipeForm(current,res).show();
 

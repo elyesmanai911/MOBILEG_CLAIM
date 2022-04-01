@@ -48,7 +48,7 @@ public ArrayList<Tournoi> Tournois;
         getTitleArea().setUIID("Container");
         setTitle("Liste Tournoi");
         getContentPane().setScrollVisible(false);
-        super.addSideMenu(res);
+       super.addSideMenu(res);
         tb.addSearchCommand(e -> {});
         
         Tabs swipe = new Tabs();
@@ -97,7 +97,7 @@ public ArrayList<Tournoi> Tournois;
         add(LayeredLayout.encloseIn(swipe, radioContainer));
         
         ButtonGroup barGroup = new ButtonGroup();
-        RadioButton all = RadioButton.createToggle("All", barGroup);
+        RadioButton all = RadioButton.createToggle("Produit", barGroup);
         all.setUIID("SelectBar");
         RadioButton Equipe = RadioButton.createToggle("Equipe", barGroup);
         Equipe.setUIID("SelectBar");
@@ -140,10 +140,20 @@ public ArrayList<Tournoi> Tournois;
             new ListTournoiForm(current,res).show();
 
         });
-Coach.addActionListener( (e) -> {
+         Coach.addActionListener( (e) -> {
             new ProfilForm(current,res).show();
 
         });
+all.addActionListener( (e) -> {
+            new NewsfeedForm(res).show();
+
+        });
+        Article.addActionListener( (e) -> {
+            new ArticleForm(current,res).show();
+
+        });
+     
+       
         
        SpanLabel sp = new SpanLabel();
        Tournois=ServiceTournoi.getInstance().getAllHotels();

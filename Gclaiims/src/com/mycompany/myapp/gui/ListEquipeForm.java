@@ -37,8 +37,9 @@ import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.entities.Equipe;
 import com.mycompany.myapp.entities.SimpleUtilisateur;
+import com.mycompany.myapp.entities.Tournoi;
 import com.mycompany.myapp.entities.Utilisateur;
-import com.mycompany.myapp.services.ServiceEquipe;
+import com.mycompany.myapp.services.*;
 import com.mycompany.myapp.services.ServiceUser;
 import java.util.ArrayList;
 import static java.util.Collections.list;
@@ -48,6 +49,7 @@ public class ListEquipeForm extends BaseForm{
 Form current;
 public ArrayList<Equipe> Equipes;
 public ArrayList<Utilisateur> membres;
+public ArrayList<Tournoi> tournois;
     public ListEquipeForm(Form previous,Resources res) {
         super("ListEquipe", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
@@ -105,7 +107,7 @@ public ArrayList<Utilisateur> membres;
         add(LayeredLayout.encloseIn(swipe, radioContainer));
         
         ButtonGroup barGroup = new ButtonGroup();
-        RadioButton all = RadioButton.createToggle("All", barGroup);
+        RadioButton all = RadioButton.createToggle("Produit", barGroup);
         all.setUIID("SelectBar");
         RadioButton Equipe = RadioButton.createToggle("Equipe", barGroup);
         Equipe.setUIID("SelectBar");
@@ -148,11 +150,18 @@ public ArrayList<Utilisateur> membres;
             new ListTournoiForm(current,res).show();
 
         });
-Coach.addActionListener( (e) -> {
+         Coach.addActionListener( (e) -> {
             new ProfilForm(current,res).show();
 
         });
-        
+all.addActionListener( (e) -> {
+            new NewsfeedForm(res).show();
+
+        });
+        Article.addActionListener( (e) -> {
+            new ArticleForm(current,res).show();
+
+        });
        SpanLabel sp = new SpanLabel();
 Equipes=ServiceEquipe.getInstance().getAllHotels();
 int i=1;
@@ -160,12 +169,21 @@ for (Equipe e :Equipes)
 { Label l=new Label("Equipe N°"+i++);
 addStringValue("",l);
 membres=ServiceEquipe.getInstance().getAllMembreEquipe(e);
+tournois=ServiceTournoi.getInstance().getAllTournois(e);
 addButton(res.getImage("news-item-1.jpg"),e.getNomEquipe()+ "\n" +e.getDescription()+ "\n" +e.getChef(), false, 26, 32);
 Label us=new Label("Les membres de L'equipe "+e.getNomEquipe()+"sont :");
+us.getAllStyles().setFgColor(0xC24400);
 addStringValue("",us);
 for (Utilisateur m :membres)
 {Label ss=new Label("");
 addStringValue(m.getEmail(),ss);
+}
+Label uss=new Label("Les Tournois de L'equipe "+e.getNomEquipe()+"sont :");
+uss.getAllStyles().setFgColor(0xC24400);
+addStringValue("",uss);
+for (Tournoi m :tournois)
+{Label ss=new Label("");
+addStringValue(m.getNomTournoi(),ss);
 }
     if(e.getEtat().equals("open"))
 

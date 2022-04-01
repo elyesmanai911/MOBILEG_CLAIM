@@ -90,7 +90,6 @@ public class BaseFormBack extends Form {
         tb.addMaterialCommandToSideMenu("ListUtilisateur", FontImage.MATERIAL_VIEW_LIST, e -> new ListUserBackForm(res).show());
         tb.addMaterialCommandToSideMenu("ListCoach", FontImage.MATERIAL_VIEW_LIST, e -> new ListCoachBackForm(res).show());
         tb.addMaterialCommandToSideMenu("ListEquipe", FontImage.MATERIAL_VIEW_LIST, e -> new ListEquipeBackForm(res).show());
-        tb.addMaterialCommandToSideMenu("ListCommande", FontImage.MATERIAL_VIEW_LIST, e -> new ListCommandeBackForm(res).show());
 tb.addMaterialCommandToSideMenu("ListTournoi", FontImage.MATERIAL_VIEW_LIST, e -> new ListTournoiBackForm(res).show());
         tb.addMaterialCommandToSideMenu("ListJeu", FontImage.MATERIAL_VIEW_LIST, e -> new ListJeuBackForm(res).show());
   tb.addMaterialCommandToSideMenu("ListRdv", FontImage.MATERIAL_VIEW_LIST, e -> new ListRdvBackForm(res).show());
@@ -110,6 +109,21 @@ tb.addMaterialCommandToSideMenu("ListTournoi", FontImage.MATERIAL_VIEW_LIST, e -
 
         tb.addMaterialCommandToSideMenu("ListCommande", FontImage.MATERIAL_VIEW_LIST, e -> new ListCommandeBackForm(res).show());
 
+tb.addMaterialCommandToSideMenu("Article", FontImage.MATERIAL_VIEW_LIST, e -> {
+            try {
+                new ListArticleBackForm(this.getComponentForm(),res).show();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        });
+
+tb.addMaterialCommandToSideMenu("Commentaires", FontImage.MATERIAL_VIEW_LIST, e -> {
+            try {
+                new ListCommentaireBackForm(this.getComponentForm(),res).show();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        });
       tb.addMaterialCommandToSideMenu("Ajouter un coach", FontImage.MATERIAL_ADD, e -> new AddCoachForm(res).show());
       tb.addMaterialCommandToSideMenu("Ajouter un produit", FontImage.MATERIAL_ADD, (ActionEvent e) -> {
                 new AddProduitForm(this.getComponentForm(),res).show();
@@ -121,6 +135,10 @@ tb.addMaterialCommandToSideMenu("ListTournoi", FontImage.MATERIAL_VIEW_LIST, e -
         });
  tb.addMaterialCommandToSideMenu("Ajouter un tournoi", FontImage.MATERIAL_ADD, e -> new AddTournoiForm(res).show());
  tb.addMaterialCommandToSideMenu("Ajouter un jeu", FontImage.MATERIAL_ADD, e -> new AddJeuForm(res).show());
+tb.addMaterialCommandToSideMenu("add Article", FontImage.MATERIAL_ADD, (ActionEvent e) -> {
+                new AddArticleForm(this.getComponentForm(),res).show();
+            
+        });
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new SignInForm(res).show());
 
     }
