@@ -90,7 +90,7 @@ public class BaseFormBack extends Form {
         tb.addMaterialCommandToSideMenu("ListUtilisateur", FontImage.MATERIAL_UPDATE, e -> new ListUserBackForm(res).show());
         tb.addMaterialCommandToSideMenu("ListCoach", FontImage.MATERIAL_UPDATE, e -> new ListCoachBackForm(res).show());
         tb.addMaterialCommandToSideMenu("ListEquipe", FontImage.MATERIAL_UPDATE, e -> new ListEquipeBackForm(res).show());
-<<<<<<< Updated upstream
+        tb.addMaterialCommandToSideMenu("ListCommande", FontImage.MATERIAL_SETTINGS, e -> new ListCommandeBackForm(res).show());
         tb.addMaterialCommandToSideMenu("ListProduit", FontImage.MATERIAL_VIEW_LIST, e -> {
             try {
                 new ListProductsForm(this.getComponentForm(),res).show();
@@ -103,9 +103,9 @@ public class BaseFormBack extends Form {
             } catch (IOException ex) {
             }
         });
-=======
+
         tb.addMaterialCommandToSideMenu("ListCommande", FontImage.MATERIAL_SETTINGS, e -> new ListCommandeBackForm(res).show());
->>>>>>> Stashed changes
+
       tb.addMaterialCommandToSideMenu("Ajouter un coach", FontImage.MATERIAL_ADD, e -> new AddCoachForm(res).show());
       tb.addMaterialCommandToSideMenu("Ajouter un produit", FontImage.MATERIAL_ADD, (ActionEvent e) -> {
                 new AddProduitForm(this.getComponentForm(),res).show();

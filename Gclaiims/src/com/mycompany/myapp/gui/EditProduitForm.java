@@ -5,10 +5,6 @@
  */
 package com.mycompany.myapp.gui;
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
@@ -154,10 +150,4 @@ public class EditProduitForm extends BaseFormBack {
 
         swipe.addTab("", page1);
     }
-<<<<<<< Updated upstream
 }
-    
-
-=======
-}
->>>>>>> Stashed changes

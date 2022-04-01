@@ -5,10 +5,6 @@
  */
 package com.mycompany.myapp.gui;
 
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
 import com.codename1.components.ImageViewer;
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;

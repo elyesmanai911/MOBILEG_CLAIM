@@ -69,10 +69,6 @@ public class ServiceCategorie {
      public ArrayList<Categorie> getAllOeuvres(){
           String url = BASE_URL+"/categ/Allcategories";
         req.setUrl(url);
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -127,8 +123,6 @@ public class ServiceCategorie {
        NetworkManager.getInstance().addToQueue(req);
         return resultOK;
     }
-<<<<<<< Updated upstream
+
 }
-=======
-}
->>>>>>> Stashed changes
+

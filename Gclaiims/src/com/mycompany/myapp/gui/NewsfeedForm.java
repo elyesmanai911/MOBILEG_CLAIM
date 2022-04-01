@@ -50,10 +50,9 @@ import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.services.ServiceProduit;
 import com.mycompany.myapp.entities.Produit;
-<<<<<<< Updated upstream
-=======
+
 import com.mycompany.myapp.services.ServicePanier;
->>>>>>> Stashed changes
+
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.io.IOException;
@@ -132,10 +131,10 @@ public class NewsfeedForm extends BaseForm {
         RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
         myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
-        RadioButton Panier = RadioButton.createToggle("Panier", barGroup);
+       
         Equipe.setUIID("SelectBar");
         add(LayeredLayout.encloseIn(
-               GridLayout.encloseIn(4, all, Equipe,Panier, Tournoi, myFavorite),
+               GridLayout.encloseIn(4, all, Equipe,Tournoi, myFavorite),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -149,21 +148,15 @@ public class NewsfeedForm extends BaseForm {
         bindButtonSelection(Equipe, arrow);
         bindButtonSelection(Tournoi, arrow);
         bindButtonSelection(myFavorite, arrow);
-         bindButtonSelection(Panier, arrow);
+        
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
        
-<<<<<<< Updated upstream
-        
-=======
-                    Panier.addActionListener( (e) -> {
-            new PanierForm(current,res).show();
 
-        });
->>>>>>> Stashed changes
+
         ArrayList<Produit> list;
         list = new ArrayList<>();
         list = ServiceProduit.getInstance().getAllOeuvres();
@@ -172,9 +165,8 @@ public class NewsfeedForm extends BaseForm {
         SpanLabel spl2 = new SpanLabel("Product price: " + "  " + p.getPrix_produit()); 
         Button AddToCart = new Button("Add to cart");
         addAll(spl2,AddToCart);
-<<<<<<< Updated upstream
-         }
-=======
+
+         
         AddToCart.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent evt) {
                 
@@ -193,9 +185,8 @@ public class NewsfeedForm extends BaseForm {
 
             
         });
-         }
-
->>>>>>> Stashed changes
+         
+}
         Equipe.addActionListener( (e) -> {
             new ListEquipeForm(current,res).show();
 
