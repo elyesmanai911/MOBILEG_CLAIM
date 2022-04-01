@@ -87,10 +87,12 @@ public class BaseFormBack extends Form {
           
           
          
-        tb.addMaterialCommandToSideMenu("ListUtilisateur", FontImage.MATERIAL_UPDATE, e -> new ListUserBackForm(res).show());
-        tb.addMaterialCommandToSideMenu("ListCoach", FontImage.MATERIAL_UPDATE, e -> new ListCoachBackForm(res).show());
-        tb.addMaterialCommandToSideMenu("ListEquipe", FontImage.MATERIAL_UPDATE, e -> new ListEquipeBackForm(res).show());
-        tb.addMaterialCommandToSideMenu("ListCommande", FontImage.MATERIAL_SETTINGS, e -> new ListCommandeBackForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListUtilisateur", FontImage.MATERIAL_VIEW_LIST, e -> new ListUserBackForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListCoach", FontImage.MATERIAL_VIEW_LIST, e -> new ListCoachBackForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListEquipe", FontImage.MATERIAL_VIEW_LIST, e -> new ListEquipeBackForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListCommande", FontImage.MATERIAL_VIEW_LIST, e -> new ListCommandeBackForm(res).show());
+tb.addMaterialCommandToSideMenu("ListTournoi", FontImage.MATERIAL_VIEW_LIST, e -> new ListTournoiBackForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListJeu", FontImage.MATERIAL_VIEW_LIST, e -> new ListJeuBackForm(res).show());
         tb.addMaterialCommandToSideMenu("ListProduit", FontImage.MATERIAL_VIEW_LIST, e -> {
             try {
                 new ListProductsForm(this.getComponentForm(),res).show();
@@ -104,7 +106,7 @@ public class BaseFormBack extends Form {
             }
         });
 
-        tb.addMaterialCommandToSideMenu("ListCommande", FontImage.MATERIAL_SETTINGS, e -> new ListCommandeBackForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListCommande", FontImage.MATERIAL_VIEW_LIST, e -> new ListCommandeBackForm(res).show());
 
       tb.addMaterialCommandToSideMenu("Ajouter un coach", FontImage.MATERIAL_ADD, e -> new AddCoachForm(res).show());
       tb.addMaterialCommandToSideMenu("Ajouter un produit", FontImage.MATERIAL_ADD, (ActionEvent e) -> {
@@ -115,6 +117,10 @@ public class BaseFormBack extends Form {
                 new AddCategorieForm(this.getComponentForm(),res).show();
             
         });
+ tb.addMaterialCommandToSideMenu("Ajouter un tournoi", FontImage.MATERIAL_ADD, e -> new AddTournoiForm(res).show());
+ tb.addMaterialCommandToSideMenu("Ajouter un jeu", FontImage.MATERIAL_ADD, e -> new AddJeuForm(res).show());
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new SignInForm(res).show());
+
     }
+
 }

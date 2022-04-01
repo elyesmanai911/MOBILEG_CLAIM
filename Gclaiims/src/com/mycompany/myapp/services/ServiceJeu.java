@@ -4,7 +4,7 @@
  */
 package com.mycompany.myapp.services;
 
-import com.mycompany.myapp.entities.Tournoi;
+import com.mycompany.myapp.entities.Jeu;
 import com.codename1.ui.List;
 import java.util.Date;
 import com.codename1.io.CharArrayReader;
@@ -13,46 +13,49 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
-import com.mycompany.myapp.entities.Tournoi;
+import com.mycompany.myapp.entities.Jeu;
 import com.mycompany.myapp.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
+import com.mycompany.myapp.entities.Tournoi;
 
 /**
  *
  * @author souma
  */
-public class ServiceTournoi {
-  public ArrayList<Tournoi> Tournois;
+public class ServiceJeu {
+  public ArrayList<Jeu> Jeus;
 
-    public static ServiceTournoi instance = null;
+    public static ServiceJeu instance = null;
     public boolean resultOK;
     private ConnectionRequest req;
 
-    private ServiceTournoi() {
+    private ServiceJeu() {
         req = new ConnectionRequest();
     }
 
-    public static ServiceTournoi getInstance() {
+    public static ServiceJeu getInstance() {
         if (instance == null) {
-            instance = new ServiceTournoi();
+            instance = new ServiceJeu();
         }
         return instance;
     }
-    public boolean addtournoi(Tournoi h) {
+    public boolean addjeu(Jeu h) {
         System.out.println(h);
         System.out.println("********");
-        String url = Statics.BASE_URL + "ajoutTournoiMobile/?nomTournoi=" + h.getNomTournoi()+  "&description=" + h.getDescription()+ "&dateev=" + h.getDateev()+  "&image=" + h.getImage() ;
+        String url = Statics.BASE_URL + "ajoutJeuMobile/?nomjeu=" + h.getNomjeu()+  "&description=" + h.getDescription()+  "&createur=" + h.getCreateur() ;
         //String url = Statics.BASE_URL + "create";
 
       
      req.setUrl(url);
         req.setPost(false);
-       req.addArgument("nomTournoi",h.getNomTournoi());
+
+       req.addArgument("nomJeu",h.getNomjeu());
+    
         req.addArgument("description", h.getDescription()+"");
-    req.addArgument("image", h.getImage()+"");
-    req.addArgument("Dateev", h.getDateev()+"");
+         
+    req.addArgument("createur", h.getCreateur()+"");
          
        
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -65,22 +68,21 @@ public class ServiceTournoi {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
-public boolean updatetournoi(Tournoi h) {
+public boolean updatejeu(Jeu h) {
         System.out.println(h);
         System.out.println("********");
-        String url = Statics.BASE_URL + "updateTournoiMobile/"+h.getId()+"?nomTournoi=" + h.getNomTournoi()+ "&description=" + h.getDescription()+ "&image=" + h.getImage();
+        String url = Statics.BASE_URL + "updateJeuMobile/"+h.getId()+"?nomjeu=" + h.getNomjeu()+ "&description=" + h.getDescription()+ "&createur=" + h.getCreateur()/*+ "&idjeu=" + h.getIdJeu()*/;
         //String url = Statics.BASE_URL + "create";
 
       
      req.setUrl(url);
         req.setPost(false);
 
-       req.addArgument("nomTournoi",h.getNomTournoi());
+       req.addArgument("nomjeu",h.getNomjeu());
       
     
         req.addArgument("description", h.getDescription()+"");
-             req.addArgument("image", h.getImage()+"");
-        
+             req.addArgument("Createur", h.getImage()+"");
        
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -92,60 +94,58 @@ public boolean updatetournoi(Tournoi h) {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return resultOK;
     }
-public ArrayList<Tournoi> parseTournois(String jsonText) {
+public ArrayList<Jeu> parseJeus(String jsonText) {
         try {
-            Tournois = new ArrayList<>();
+            Jeus = new ArrayList<>();
             JSONParser j = new JSONParser();
-            Map<String, Object> TournoiListJson
+            Map<String, Object> JeuListJson
                     = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
-            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) TournoiListJson.get("root");
+
+            java.util.List<Map<String, Object>> list = (java.util.List<Map<String, Object>>) JeuListJson.get("root");
             for(Map<String,Object> obj :list){
-                Tournoi h = new Tournoi();
+           
+                Jeu h = new Jeu();
+
                 float id = Float.parseFloat(obj.get("id").toString());
                 h.setId((int) id);
-                h.setNomTournoi(obj.get("nomtournoi").toString());
+
+                h.setNomjeu(obj.get("nomjeu").toString());
                 h.setDescription(obj.get("description").toString());
-                h.setImage(obj.get("image").toString());          
-                Tournois.add(h);
-                System.out.println(h);
+                h.setCreateur(obj.get("createur").toString());
+     
+            
+               
+
+               
+
+                Jeus.add(h);
             }
 
         } catch (IOException ex) {
 
         }
-        return Tournois;
+        return Jeus;
     }
-      public ArrayList<Tournoi> getAllHotels() {
+      public ArrayList<Jeu> getAllHotels() {
         
  req = new ConnectionRequest();
-        String url = Statics.BASE_URL +"Tournoi/AllTournois";
+        String url = Statics.BASE_URL +"Jeu/AllJeus";
         System.out.println("===>" + url);
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                Tournois = parseTournois(new String(req.getResponseData()));
+                Jeus = parseJeus(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
-        return Tournois;
+        return Jeus;
     }
        public void Supprimer(int id) {
         ConnectionRequest con = new ConnectionRequest();
-        con.setUrl(Statics.BASE_URL+"deleteTournoiMobile/"+id);
-        con.setPost(false);
-        con.addResponseListener((evt) -> {
-            System.out.println(con.getResponseData());
-
-        });
-        NetworkManager.getInstance().addToQueueAndWait(con);
-
-    }
-         public void rejoindre(int id,int idd) {
-        ConnectionRequest con = new ConnectionRequest();
-        con.setUrl(Statics.BASE_URL+"rejoindreTournoiMOBILE/"+id+"?simpleutilisateurs=" + idd);
+        con.setUrl(Statics.BASE_URL+"deleteJeuMobile/"+id);
         con.setPost(false);
         con.addResponseListener((evt) -> {
             System.out.println(con.getResponseData());

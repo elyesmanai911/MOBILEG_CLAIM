@@ -1,25 +1,8 @@
 /*
- * Copyright (c) 2016, Codename One
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
- * documentation files (the "Software"), to deal in the Software without restriction, including without limitation 
- * the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, 
- * and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions 
- * of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, 
- * INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A 
- * PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT 
- * HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 
- * CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE 
- * OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-
 package com.mycompany.myapp.gui;
-
-
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
@@ -27,6 +10,10 @@ import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
 import com.codename1.ui.Command;
 import com.codename1.ui.Component;
+import static com.codename1.ui.Component.BOTTOM;
+import static com.codename1.ui.Component.CENTER;
+import static com.codename1.ui.Component.LEFT;
+import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
@@ -48,29 +35,27 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
-import com.mycompany.myapp.services.ServiceProduit;
-import com.mycompany.myapp.entities.Produit;
-
-import com.mycompany.myapp.services.ServicePanier;
-
+import com.mycompany.myapp.entities.Equipe;
+import com.mycompany.myapp.entities.Jeu;
+import com.mycompany.myapp.entities.SimpleUtilisateur;
+import com.mycompany.myapp.entities.Utilisateur;
+import com.mycompany.myapp.services.ServiceEquipe;
+import com.mycompany.myapp.services.ServiceJeu;
+import com.mycompany.myapp.services.ServiceUser;
 import java.util.ArrayList;
 import static java.util.Collections.list;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.util.Map;
 
-/**
- * The newsfeed form
- *
- * @author Shai Almog
- */
-public class NewsfeedForm extends BaseForm {
- Form current;
-    public NewsfeedForm(Resources res) {
-        super("Newsfeed", BoxLayout.y());
+public class ListJeuForm extends BaseForm{
+Form current;
+public ArrayList<Jeu> Jeus;
+public ArrayList<Utilisateur> membres;
+    public ListJeuForm(Form previous,Resources res) {
+        super("ListEquipe", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
         setToolbar(tb);
         getTitleArea().setUIID("Container");
-        setTitle("Newsfeed");
+        setTitle("Liste Jeu");
         getContentPane().setScrollVisible(false);
         
         super.addSideMenu(res);
@@ -80,8 +65,9 @@ public class NewsfeedForm extends BaseForm {
 
         Label spacer1 = new Label();
         Label spacer2 = new Label();
-        addTab(swipe, res.getImage("cg-5.jpg"), spacer1, "15 Likes  ", "85 Comments", "Rejoindre une équipe pour participer aux tournois ");
+       addTab(swipe, res.getImage("cg-5.jpg"), spacer1, "15 Likes  ", "85 Comments", "Rejoindre une équipe pour participer aux Tournois ");
         addTab(swipe, res.getImage("cg-10.jpg"), spacer2, "100 Likes  ", "66 Comments", "les Equipes de GCLAIM");
+        
                 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -126,83 +112,55 @@ public class NewsfeedForm extends BaseForm {
         all.setUIID("SelectBar");
         RadioButton Equipe = RadioButton.createToggle("Equipe", barGroup);
         Equipe.setUIID("SelectBar");
-        RadioButton Tournoi = RadioButton.createToggle("Tournoi", barGroup);
-        Tournoi.setUIID("SelectBar");
+        
+        RadioButton popular = RadioButton.createToggle("Tournois", barGroup);
+        popular.setUIID("SelectBar");
+        
+        RadioButton jeus = RadioButton.createToggle("Jeus", barGroup);
+        jeus.setUIID("SelectBar");
+
+        popular.setUIID("SelectBar");
         RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
         myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
-       
-        Equipe.setUIID("SelectBar");
+        
         add(LayeredLayout.encloseIn(
-               GridLayout.encloseIn(4, all, Equipe,Tournoi, myFavorite),
+                GridLayout.encloseIn(4, all, Equipe, popular,jeus, myFavorite),
                 FlowLayout.encloseBottom(arrow)
         ));
         
-        all.setSelected(true);
+        jeus.setSelected(true);
         arrow.setVisible(false);
         addShowListener(e -> {
             arrow.setVisible(true);
-            updateArrowPosition(all, arrow);
+            updateArrowPosition(jeus, arrow);
         });
         bindButtonSelection(all, arrow);
-        bindButtonSelection(Equipe, arrow);
-        bindButtonSelection(Tournoi, arrow);
+        bindButtonSelection(jeus, arrow);
+        bindButtonSelection(popular, arrow);
+           bindButtonSelection(jeus, arrow);
         bindButtonSelection(myFavorite, arrow);
-        
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-       
-
-
-        ArrayList<Produit> list;
-        list = new ArrayList<>();
-        list = ServiceProduit.getInstance().getAllOeuvres();
-         for ( Produit p : list) {
-        addButton(res.getImage("news-item-1.jpg"), p.getNom_produit(), false,  p.getQte_produit(), p.getNbr_vu());
-        SpanLabel spl2 = new SpanLabel("Product price: " + "  " + p.getPrix_produit()); 
-       
-Label AddToCart1 =new Label("ajouter au panier");
-AddToCart1.setUIID("NewsTopLine");
-Style modifStyle =new Style(AddToCart1.getUnselectedStyle());
-modifStyle.setFgColor(0xf7ad02);
-FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_SHOPPING_BASKET,modifStyle);
-AddToCart1.setIcon(mfontimage);
-AddToCart1.setTextPosition(LEFT);
-
-
-addStringValue("", BoxLayout.encloseY(AddToCart1));
-AddToCart1.addPointerPressedListener(new ActionListener() {
-       public void actionPerformed(ActionEvent evt) {
-                
-                    try {
-
-                        if (ServicePanier.getInstance().AddItemToCart(p.getId_produit())) {
-                            Dialog.show("Added To Cart", "Product Added To Cart", new Command("OK"));
-                        } else {
-                            Dialog.show("ERROR", "Server error", new Command("OK"));
-                        }
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-
-                }
-
-            
-        });
-       
-         
+        
+        
+       SpanLabel sp = new SpanLabel();
+Jeus=ServiceJeu.getInstance().getAllHotels();
+int i=1;
+for (Jeu e :Jeus)
+{ Label l=new Label("Jeu N°"+i++);
+addStringValue("",l);
+addButton(res.getImage("news-item-1.jpg"),e.getNomjeu()+ "\n" +e.getDescription()+ "\n" +e.getCreateur(), false, 26, 32);
+ 
 }
-        Equipe.addActionListener( (e) -> {
-            new ListEquipeForm(current,res).show();
+ // add(sp);
+    }
 
-        });
-        Tournoi.addActionListener( (e) -> {
-            new ListTournoiForm(current,res).show();
-
-        });
+    ListJeuForm(Resources res) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     private void updateArrowPosition(Button b, Label arrow) {
@@ -211,7 +169,7 @@ AddToCart1.addPointerPressedListener(new ActionListener() {
         
         
     }
-     private void addStringValue(String s, Component v) {
+    private void addStringValue(String s, Component v) {
         add(BorderLayout.west(new Label(s, "PaddedLabel")).
                 add(BorderLayout.CENTER, v));
         add(createLineSeparator(0xeeeeee));
@@ -288,7 +246,9 @@ AddToCart1.addPointerPressedListener(new ActionListener() {
        add(cnt);
        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
    }
-    
+      
+  
+  
     private void bindButtonSelection(Button b, Label arrow) {
         b.addActionListener(e -> {
             if(b.isSelected()) {

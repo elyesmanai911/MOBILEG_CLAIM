@@ -36,7 +36,8 @@ import com.mycompany.myapp.services.ServiceTournoi;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.Map;
-
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 public class ListTournoiForm extends BaseForm{
 Form current;
 public ArrayList<Tournoi> Tournois;
@@ -48,7 +49,7 @@ public ArrayList<Tournoi> Tournois;
         setTitle("Liste Tournoi");
         getContentPane().setScrollVisible(false);
         
-        super.addSideMenu(res);
+         super.addSideMenu(res);
         tb.addSearchCommand(e -> {});
         
         Tabs swipe = new Tabs();
@@ -100,18 +101,19 @@ public ArrayList<Tournoi> Tournois;
         ButtonGroup barGroup = new ButtonGroup();
         RadioButton all = RadioButton.createToggle("All", barGroup);
         all.setUIID("SelectBar");
-        RadioButton Tournoi = RadioButton.createToggle("Tournoi", barGroup);
-        Tournoi.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
+        RadioButton Equipe = RadioButton.createToggle("Equipe", barGroup);
+        Equipe.setUIID("SelectBar");
+        RadioButton popular = RadioButton.createToggle("Tournois", barGroup);
         popular.setUIID("SelectBar");
         RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
         myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all, Tournoi, popular, myFavorite),
+                GridLayout.encloseIn(4, all, Equipe, popular, myFavorite),
                 FlowLayout.encloseBottom(arrow)
         ));
+       
         
         all.setSelected(true);
         arrow.setVisible(false);
@@ -120,7 +122,7 @@ public ArrayList<Tournoi> Tournois;
             updateArrowPosition(all, arrow);
         });
         bindButtonSelection(all, arrow);
-        bindButtonSelection(Tournoi, arrow);
+        bindButtonSelection(Equipe, arrow);
         bindButtonSelection(popular, arrow);
         bindButtonSelection(myFavorite, arrow);
         
@@ -135,12 +137,35 @@ public ArrayList<Tournoi> Tournois;
 for (Tournoi e :Tournois)
 { addButton(res.getImage("news-item-1.jpg"),e.getNomTournoi()+ "\n" +e.getDescription()+ "\n" , false, 26, 32);
       //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
+            Label Modif =new Label("Rejoindre un Tournoi");
 
+     Modif.setUIID("NewsTopLine");
+Style modifStyle =new Style(Modif.getUnselectedStyle());
+modifStyle.setFgColor(0xc24400);
+FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_ADD,modifStyle);
+Modif.setIcon(mfontimage);
+Modif.setTextPosition(LEFT);
+addStringValue("", BoxLayout.encloseY(Modif));
+
+Modif.addPointerPressedListener(new ActionListener() {
+       public void actionPerformed(ActionEvent evt) {
+                
+                    ServiceTournoi.getInstance().rejoindre(e.getId(),SessionManager.getId());
+
+                };
+
+            
+       } );
       
 }
  // add(sp);
     }
-    
+      private void addStringValue(String s, Component v) {
+        add(BorderLayout.west(new Label(s, "PaddedLabel")).
+                add(BorderLayout.CENTER, v));
+        add(createLineSeparator(0xeeeeee));
+
+    }
     private void updateArrowPosition(Button b, Label arrow) {
         arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);
         arrow.getParent().repaint();
