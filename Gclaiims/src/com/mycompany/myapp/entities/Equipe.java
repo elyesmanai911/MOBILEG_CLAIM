@@ -14,19 +14,48 @@ public class Equipe {
     private int id;
     private String nomEquipe;
     private String Description;
-    private Date dateCreation;
+    private String dateCreation;
     private String Etat;
     private String chef;
-
-    public Equipe(String nomEquipe, String description, Date dateCreation, String Etat, String chef) {
+private int idUser;
+    public Equipe(String nomEquipe, String Etat, String description, String chef,int idUser) {
         this.nomEquipe = nomEquipe;
         this.Description = description;
-        this.dateCreation = dateCreation;
         this.Etat = Etat;
         this.chef = chef;
+        this.idUser=idUser;
     }
 
     public Equipe() {
+    }
+
+    public Equipe(int id, String nomEquipe, String Description, String dateCreation, String Etat, String chef, int idUser) {
+        this.id = id;
+        this.nomEquipe = nomEquipe;
+        this.Description = Description;
+        this.dateCreation = dateCreation;
+        this.Etat = Etat;
+        this.chef = chef;
+        this.idUser = idUser;
+    }
+ public Equipe(int id,String nomEquipe, String Description,String Etat) {
+         this.id = id;
+        this.nomEquipe = nomEquipe;
+        this.Description = Description;
+        this.Etat = Etat;
+       
+    }
+public Equipe(int id,int idUser) {
+         this.id = id;
+       this.idUser = idUser;
+       
+    }
+    public int getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(int idUser) {
+        this.idUser = idUser;
     }
 
     public int getId() {
@@ -53,11 +82,11 @@ public class Equipe {
         this.Description = description;
     }
 
-    public Date getDateCreation() {
+    public String getDateCreation() {
         return dateCreation;
     }
 
-    public void setDateCreation(Date dateCreation) {
+    public void setDateCreation(String dateCreation) {
         this.dateCreation = dateCreation;
     }
 

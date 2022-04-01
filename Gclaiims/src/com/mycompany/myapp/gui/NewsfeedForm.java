@@ -19,13 +19,16 @@
 
 package com.mycompany.myapp.gui;
 
+
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
+import com.codename1.ui.Command;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
@@ -36,6 +39,7 @@ import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
@@ -44,6 +48,16 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.services.ServiceProduit;
+import com.mycompany.myapp.entities.Produit;
+<<<<<<< Updated upstream
+=======
+import com.mycompany.myapp.services.ServicePanier;
+>>>>>>> Stashed changes
+import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * The newsfeed form
@@ -67,8 +81,8 @@ public class NewsfeedForm extends BaseForm {
 
         Label spacer1 = new Label();
         Label spacer2 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
-        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
+        addTab(swipe, res.getImage("cg-5.jpg"), spacer1, "15 Likes  ", "85 Comments", "Rejoindre une équipe pour participer aux tournois ");
+        addTab(swipe, res.getImage("cg-10.jpg"), spacer2, "100 Likes  ", "66 Comments", "les Equipes de GCLAIM");
                 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -113,14 +127,15 @@ public class NewsfeedForm extends BaseForm {
         all.setUIID("SelectBar");
         RadioButton Equipe = RadioButton.createToggle("Equipe", barGroup);
         Equipe.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
-        popular.setUIID("SelectBar");
+        RadioButton Tournoi = RadioButton.createToggle("Tournoi", barGroup);
+        Tournoi.setUIID("SelectBar");
         RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
         myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
-        
+        RadioButton Panier = RadioButton.createToggle("Panier", barGroup);
+        Equipe.setUIID("SelectBar");
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all, Equipe, popular, myFavorite),
+               GridLayout.encloseIn(4, all, Equipe,Panier, Tournoi, myFavorite),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -132,21 +147,61 @@ public class NewsfeedForm extends BaseForm {
         });
         bindButtonSelection(all, arrow);
         bindButtonSelection(Equipe, arrow);
-        bindButtonSelection(popular, arrow);
+        bindButtonSelection(Tournoi, arrow);
         bindButtonSelection(myFavorite, arrow);
+         bindButtonSelection(Panier, arrow);
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
        
+<<<<<<< Updated upstream
         
-        addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 26, 32);
-        addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21);
-        addButton(res.getImage("news-item-3.jpg"), "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15);
-        addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9);
+=======
+                    Panier.addActionListener( (e) -> {
+            new PanierForm(current,res).show();
+
+        });
+>>>>>>> Stashed changes
+        ArrayList<Produit> list;
+        list = new ArrayList<>();
+        list = ServiceProduit.getInstance().getAllOeuvres();
+         for ( Produit p : list) {
+        addButton(res.getImage("news-item-1.jpg"), p.getNom_produit(), false,  p.getQte_produit(), p.getNbr_vu());
+        SpanLabel spl2 = new SpanLabel("Product price: " + "  " + p.getPrix_produit()); 
+        Button AddToCart = new Button("Add to cart");
+        addAll(spl2,AddToCart);
+<<<<<<< Updated upstream
+         }
+=======
+        AddToCart.addActionListener(new ActionListener() {
+       public void actionPerformed(ActionEvent evt) {
+                
+                    try {
+
+                        if (ServicePanier.getInstance().AddItemToCart(p.getId_produit())) {
+                            Dialog.show("Added To Cart", "Product Added To Cart", new Command("OK"));
+                        } else {
+                            Dialog.show("ERROR", "Server error", new Command("OK"));
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                }
+
+            
+        });
+         }
+
+>>>>>>> Stashed changes
         Equipe.addActionListener( (e) -> {
             new ListEquipeForm(current,res).show();
+
+        });
+        Tournoi.addActionListener( (e) -> {
+            new ListTournoiForm(current,res).show();
 
         });
     }
