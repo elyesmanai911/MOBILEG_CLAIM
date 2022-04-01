@@ -8,12 +8,14 @@ import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
+import com.codename1.ui.Command;
 import com.codename1.ui.Component;
 import static com.codename1.ui.Component.BOTTOM;
 import static com.codename1.ui.Component.CENTER;
 import static com.codename1.ui.Component.LEFT;
 import static com.codename1.ui.Component.RIGHT;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
@@ -24,6 +26,8 @@ import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -32,7 +36,11 @@ import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.entities.Equipe;
-import com.mycompany.myapp.services.ServiceEquipe;
+import com.mycompany.myapp.entities.SimpleUtilisateur;
+import com.mycompany.myapp.entities.Tournoi;
+import com.mycompany.myapp.entities.Utilisateur;
+import com.mycompany.myapp.services.*;
+import com.mycompany.myapp.services.ServiceUser;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.Map;
@@ -40,6 +48,8 @@ import java.util.Map;
 public class ListEquipeForm extends BaseForm{
 Form current;
 public ArrayList<Equipe> Equipes;
+public ArrayList<Utilisateur> membres;
+public ArrayList<Tournoi> tournois;
     public ListEquipeForm(Form previous,Resources res) {
         super("ListEquipe", BoxLayout.y());
         Toolbar tb = new Toolbar(true);
@@ -55,8 +65,8 @@ public ArrayList<Equipe> Equipes;
 
         Label spacer1 = new Label();
         Label spacer2 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
-        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
+        addTab(swipe, res.getImage("cg-5.jpg"), spacer1, "15 Likes  ", "85 Comments", "Rejoindre une équipe pour participer aux tournois ");
+        addTab(swipe, res.getImage("cg-10.jpg"), spacer2, "100 Likes  ", "66 Comments", "les Equipes de GCLAIM");
                 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -97,18 +107,21 @@ public ArrayList<Equipe> Equipes;
         add(LayeredLayout.encloseIn(swipe, radioContainer));
         
         ButtonGroup barGroup = new ButtonGroup();
-        RadioButton all = RadioButton.createToggle("All", barGroup);
+        RadioButton all = RadioButton.createToggle("Produit", barGroup);
         all.setUIID("SelectBar");
         RadioButton Equipe = RadioButton.createToggle("Equipe", barGroup);
         Equipe.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
-        popular.setUIID("SelectBar");
-        RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
-        myFavorite.setUIID("SelectBar");
+        RadioButton Tournoi = RadioButton.createToggle("Tournoi", barGroup);
+        Tournoi.setUIID("SelectBar");
+        RadioButton Coach = RadioButton.createToggle("Coach", barGroup);
+        Coach.setUIID("SelectBar");
+        RadioButton Article = RadioButton.createToggle("Article", barGroup);
+        Article.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
-        
+       
+        Equipe.setUIID("SelectBar");
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all, Equipe, popular, myFavorite),
+               GridLayout.encloseIn(4, all, Equipe,Tournoi, Coach,Article),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -120,24 +133,114 @@ public ArrayList<Equipe> Equipes;
         });
         bindButtonSelection(all, arrow);
         bindButtonSelection(Equipe, arrow);
-        bindButtonSelection(popular, arrow);
-        bindButtonSelection(myFavorite, arrow);
+        bindButtonSelection(Tournoi, arrow);
+        bindButtonSelection(Coach, arrow);
+          bindButtonSelection(Article, arrow);
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-        
-        
+     
+        Equipe.addActionListener( (e) -> {
+            new ListEquipeForm(current,res).show();
+
+        });
+        Tournoi.addActionListener( (e) -> {
+            new ListTournoiForm(current,res).show();
+
+        });
+         Coach.addActionListener( (e) -> {
+            new ProfilForm(current,res).show();
+
+        });
+all.addActionListener( (e) -> {
+            new NewsfeedForm(res).show();
+
+        });
+        Article.addActionListener( (e) -> {
+            new ArticleForm(current,res).show();
+
+        });
        SpanLabel sp = new SpanLabel();
 Equipes=ServiceEquipe.getInstance().getAllHotels();
+int i=1;
 for (Equipe e :Equipes)
-{ addButton(res.getImage("news-item-1.jpg"),e.getNomEquipe().toString()+ "\n" +e.getDescription().toString()+ "\n" +e.getChef().toString(), false, 26, 32);
-      //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
+{ Label l=new Label("Equipe N°"+i++);
+addStringValue("",l);
+membres=ServiceEquipe.getInstance().getAllMembreEquipe(e);
+tournois=ServiceTournoi.getInstance().getAllTournois(e);
+addButton(res.getImage("news-item-1.jpg"),e.getNomEquipe()+ "\n" +e.getDescription()+ "\n" +e.getChef(), false, 26, 32);
+Label us=new Label("Les membres de L'equipe "+e.getNomEquipe()+"sont :");
+us.getAllStyles().setFgColor(0xC24400);
+addStringValue("",us);
+for (Utilisateur m :membres)
+{Label ss=new Label("");
+addStringValue(m.getEmail(),ss);
+}
+Label uss=new Label("Les Tournois de L'equipe "+e.getNomEquipe()+"sont :");
+uss.getAllStyles().setFgColor(0xC24400);
+addStringValue("",uss);
+for (Tournoi m :tournois)
+{Label ss=new Label("");
+addStringValue(m.getNomTournoi(),ss);
+}
+    if(e.getEtat().equals("open"))
 
-      
+    {int verif=0;
+for (Utilisateur m :membres)
+{
+if (m.getEmail().equals(SessionManager.getEmail()))
+{verif=1;
+}
+ }
+if (verif==0)
+{
+        System.out.println(SessionManager.getId());
+        Button next = new Button("REJOINDRE L'EQUIPE");
+        addStringValue("", BoxLayout.encloseY(next));
+  next.addActionListener(new ActionListener() {
+       public void actionPerformed(ActionEvent evt) {
+                
+                    try {
+
+                        Equipe h = new Equipe(e.getId(),SessionManager.getId());
+
+                        if (ServiceEquipe.getInstance().rejoindreequipe(h)) {
+                            Dialog.show("Success", "Connection accepted", new Command("OK"));
+                        } else {
+                            Dialog.show("ERROR", "Server error", new Command("OK"));
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                }
+
+            
+        });
+    } 
+}
+if(SessionManager.getUserName().equals(e.getChef()))
+{Label Modif =new Label("MODIFIER VOTRE EQUIPE");
+Modif.setUIID("NewsTopLine");
+Style modifStyle =new Style(Modif.getUnselectedStyle());
+modifStyle.setFgColor(0xf7ad02);
+FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_MODE_EDIT,modifStyle);
+Modif.setIcon(mfontimage);
+Modif.setTextPosition(LEFT);
+
+
+addStringValue("", BoxLayout.encloseY(Modif));
+Modif.addPointerPressedListener(ll->new ModifEquipeForm(res,e).show());
+}
+ 
 }
  // add(sp);
+    }
+
+    ListEquipeForm(Resources res) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     private void updateArrowPosition(Button b, Label arrow) {
@@ -146,7 +249,12 @@ for (Equipe e :Equipes)
         
         
     }
-    
+    private void addStringValue(String s, Component v) {
+        add(BorderLayout.west(new Label(s, "PaddedLabel")).
+                add(BorderLayout.CENTER, v));
+        add(createLineSeparator(0xeeeeee));
+
+    }
     private void addTab(Tabs swipe, Image img, Label spacer, String likesStr, String commentsStr, String text) {
         int size = Math.min(Display.getInstance().getDisplayWidth(), Display.getInstance().getDisplayHeight());
         if(img.getHeight() < size) {
@@ -218,7 +326,9 @@ for (Equipe e :Equipes)
        add(cnt);
        image.addActionListener(e -> ToastBar.showMessage(title, FontImage.MATERIAL_INFO));
    }
-    
+      
+  
+  
     private void bindButtonSelection(Button b, Label arrow) {
         b.addActionListener(e -> {
             if(b.isSelected()) {

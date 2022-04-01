@@ -3,8 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+<<<<<<< Updated upstream
         <group>
-            <file>file:/C:/Users/souma/Documents/NetBeansProjects/Gclaiims/Gclaiims/src/com/mycompany/myapp/services/ServiceEquipe.java</file>
+            <file>file:/C:/Users/azizk/Desktop/Gclaiims/src/com/mycompany/myapp/gui/BaseFormBack.java</file>
+            <file>file:/C:/Users/azizk/Desktop/Gclaiims/src/com/mycompany/myapp/gui/ListProductsForm.java</file>
+            <file>file:/C:/Users/azizk/Desktop/Gclaiims/src/com/mycompany/myapp/gui/SignInForm.java</file>
+            <file>file:/C:/Users/azizk/Desktop/Gclaiims/src/com/mycompany/myapp/services/ServiceUtilisateur.java</file>
         </group>
+=======
+        <group/>
+>>>>>>> Stashed changes
     </open-files>
 </project-private>

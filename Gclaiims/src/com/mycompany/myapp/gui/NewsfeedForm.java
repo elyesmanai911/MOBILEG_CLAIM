@@ -19,13 +19,16 @@
 
 package com.mycompany.myapp.gui;
 
+
 import com.codename1.components.ScaleImageLabel;
 import com.codename1.components.SpanLabel;
 import com.codename1.components.ToastBar;
 import com.codename1.ui.Button;
 import com.codename1.ui.ButtonGroup;
+import com.codename1.ui.Command;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
@@ -36,6 +39,7 @@ import com.codename1.ui.RadioButton;
 import com.codename1.ui.Tabs;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
@@ -44,6 +48,15 @@ import com.codename1.ui.layouts.GridLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.services.ServiceProduit;
+import com.mycompany.myapp.entities.Produit;
+
+import com.mycompany.myapp.services.ServicePanier;
+
+import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * The newsfeed form
@@ -67,8 +80,8 @@ public class NewsfeedForm extends BaseForm {
 
         Label spacer1 = new Label();
         Label spacer2 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
-        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
+        addTab(swipe, res.getImage("cg-5.jpg"), spacer1, "15 Likes  ", "85 Comments", "Rejoindre une équipe pour participer aux tournois ");
+        addTab(swipe, res.getImage("cg-10.jpg"), spacer2, "100 Likes  ", "66 Comments", "les Equipes de GCLAIM");
                 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -113,14 +126,17 @@ public class NewsfeedForm extends BaseForm {
         all.setUIID("SelectBar");
         RadioButton Equipe = RadioButton.createToggle("Equipe", barGroup);
         Equipe.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
-        popular.setUIID("SelectBar");
-        RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
-        myFavorite.setUIID("SelectBar");
+        RadioButton Tournoi = RadioButton.createToggle("Tournoi", barGroup);
+        Tournoi.setUIID("SelectBar");
+        RadioButton Coach = RadioButton.createToggle("Coach", barGroup);
+        Coach.setUIID("SelectBar");
+        RadioButton Article = RadioButton.createToggle("Article", barGroup);
+        Article.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
-        
+       
+        Equipe.setUIID("SelectBar");
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all, Equipe, popular, myFavorite),
+               GridLayout.encloseIn(4, all, Equipe,Tournoi, Coach,Article),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -132,23 +148,72 @@ public class NewsfeedForm extends BaseForm {
         });
         bindButtonSelection(all, arrow);
         bindButtonSelection(Equipe, arrow);
-        bindButtonSelection(popular, arrow);
-        bindButtonSelection(myFavorite, arrow);
+        bindButtonSelection(Tournoi, arrow);
+        bindButtonSelection(Coach, arrow);
+          bindButtonSelection(Article, arrow);
         
         // special case for rotation
         addOrientationListener(e -> {
             updateArrowPosition(barGroup.getRadioButton(barGroup.getSelectedIndex()), arrow);
         });
-       
-        
-        addButton(res.getImage("news-item-1.jpg"), "Morbi per tincidunt tellus sit of amet eros laoreet.", false, 26, 32);
-        addButton(res.getImage("news-item-2.jpg"), "Fusce ornare cursus masspretium tortor integer placera.", true, 15, 21);
-        addButton(res.getImage("news-item-3.jpg"), "Maecenas eu risus blanscelerisque massa non amcorpe.", false, 36, 15);
-        addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9);
+         Article.addActionListener( (e) -> {
+            new ArticleForm(current,res).show();
+
+        });
         Equipe.addActionListener( (e) -> {
             new ListEquipeForm(current,res).show();
 
         });
+        Tournoi.addActionListener( (e) -> {
+            new ListTournoiForm(current,res).show();
+
+        });
+Coach.addActionListener( (e) -> {
+            new ProfilForm(current,res).show();
+
+        });
+
+  
+
+
+        ArrayList<Produit> list;
+        list = new ArrayList<>();
+        list = ServiceProduit.getInstance().getAllOeuvres();
+         for ( Produit p : list) {
+        addButton(res.getImage("news-item-1.jpg"), p.getNom_produit(), false,  p.getQte_produit(), p.getNbr_vu());
+        SpanLabel spl2 = new SpanLabel("Product price: " + "  " + p.getPrix_produit()); 
+       
+Label AddToCart1 =new Label("ajouter au panier");
+AddToCart1.setUIID("NewsTopLine");
+Style modifStyle =new Style(AddToCart1.getUnselectedStyle());
+modifStyle.setFgColor(0xf7ad02);
+FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_SHOPPING_BASKET,modifStyle);
+AddToCart1.setIcon(mfontimage);
+AddToCart1.setTextPosition(LEFT);
+
+
+addStringValue("", BoxLayout.encloseY(AddToCart1));
+AddToCart1.addPointerPressedListener(new ActionListener() {
+       public void actionPerformed(ActionEvent evt) {
+                
+                    try {
+
+                        if (ServicePanier.getInstance().AddItemToCart(p.getId_produit())) {
+                            Dialog.show("Added To Cart", "Product Added To Cart", new Command("OK"));
+                        } else {
+                            Dialog.show("ERROR", "Server error", new Command("OK"));
+                        }
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+
+                }
+
+            
+        });
+       
+         
+}
     }
     
     private void updateArrowPosition(Button b, Label arrow) {
@@ -157,7 +222,12 @@ public class NewsfeedForm extends BaseForm {
         
         
     }
-    
+     private void addStringValue(String s, Component v) {
+        add(BorderLayout.west(new Label(s, "PaddedLabel")).
+                add(BorderLayout.CENTER, v));
+        add(createLineSeparator(0xeeeeee));
+
+    }
     private void addTab(Tabs swipe, Image img, Label spacer, String likesStr, String commentsStr, String text) {
         int size = Math.min(Display.getInstance().getDisplayWidth(), Display.getInstance().getDisplayHeight());
         if(img.getHeight() < size) {
