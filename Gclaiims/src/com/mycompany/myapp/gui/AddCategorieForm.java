@@ -98,8 +98,9 @@ public class AddCategorieForm extends BaseFormBack {
               setTitle("Add categorie");
         setLayout(BoxLayout.yCenter());
         TextField tfNomCateg = new TextField(""," Nom categorie ");
+tfNomCateg.getAllStyles().setFgColor(0X000000);
         TextField tfType = new TextField("","type ");
-
+tfType.getAllStyles().setFgColor(0X000000);
         Button btnValider = new Button("Add categorie");
      
         btnValider.addActionListener(new ActionListener() {

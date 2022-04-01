@@ -50,14 +50,14 @@ public class ServiceProduit {
            for ( Map<String,Object> obj: list){
              Produit p = new Produit();
              float id = Float.parseFloat(obj.get("id_produit").toString());
-             float vu = Float.parseFloat(obj.get("nbr_vu").toString());
+            // float vu = Float.parseFloat(obj.get("nbr_vu").toString());
              float qte = Float.parseFloat(obj.get("Qte_produit").toString());
 
              p.setId_produit((int)id);
              p.setNom_produit(obj.get("nom_produit").toString());
              p.setDescription(obj.get("description").toString());
              p.setPrix_produit((double) obj.get("prix_produit"));
-             p.setNbr_vu((int) vu);
+            // p.setNbr_vu((int) vu);
              p.setQte_produit((int) qte);
              produits.add(p);
          

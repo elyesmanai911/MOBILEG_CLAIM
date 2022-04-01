@@ -122,10 +122,13 @@ public class AddProduitForm extends BaseFormBack {
         System.out.println(ServiceCategorie.getInstance().getAllOeuvres());
                 
         TextField tfNomProd = new TextField(""," Nom produit ");
+         tfNomProd.getAllStyles().setFgColor(0X000000);
         TextField tfdesc = new TextField("","Description ");
-
+tfdesc.getAllStyles().setFgColor(0X000000);
         TextField tfprix= new TextField("", " Prix");
+tfprix.getAllStyles().setFgColor(0X000000);
         TextField tfqte= new TextField("", " quantite");
+tfqte.getAllStyles().setFgColor(0X000000);
         Form hi = new Form("ComboBox", new BoxLayout(BoxLayout.Y_AXIS));
          list = new ArrayList<>();
           list = ServiceCategorie.getInstance().getAllOeuvres();
