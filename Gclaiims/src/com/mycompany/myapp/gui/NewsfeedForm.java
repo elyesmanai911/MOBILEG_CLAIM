@@ -115,12 +115,14 @@ public class NewsfeedForm extends BaseForm {
         Equipe.setUIID("SelectBar");
         RadioButton Tournoi = RadioButton.createToggle("Tournoi", barGroup);
         Tournoi.setUIID("SelectBar");
+        RadioButton Jeu = RadioButton.createToggle("Jeu", barGroup);
+        Equipe.setUIID("SelectBar");
         RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
         myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all, Equipe, Tournoi, myFavorite),
+                GridLayout.encloseIn(4, all, Equipe, Tournoi,Jeu, myFavorite),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -133,6 +135,7 @@ public class NewsfeedForm extends BaseForm {
         bindButtonSelection(all, arrow);
         bindButtonSelection(Equipe, arrow);
         bindButtonSelection(Tournoi, arrow);
+         bindButtonSelection(Jeu, arrow);
         bindButtonSelection(myFavorite, arrow);
         
         // special case for rotation
@@ -151,6 +154,10 @@ public class NewsfeedForm extends BaseForm {
         });
         Tournoi.addActionListener( (e) -> {
             new ListTournoiForm(current,res).show();
+
+        });
+        Jeu.addActionListener( (e) -> {
+            new ListJeuForm(current,res).show();
 
         });
     }

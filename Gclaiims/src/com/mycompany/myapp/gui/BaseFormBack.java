@@ -84,8 +84,14 @@ public class BaseFormBack extends Form {
         
         tb.addMaterialCommandToSideMenu("ListUtilisateur", FontImage.MATERIAL_UPDATE, e -> new ListUserBackForm(res).show());
         tb.addMaterialCommandToSideMenu("ListCoach", FontImage.MATERIAL_UPDATE, e -> new ListCoachBackForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListTournoi", FontImage.MATERIAL_UPDATE, e -> new ListTournoiBackForm(res).show());
         tb.addMaterialCommandToSideMenu("ListEquipe", FontImage.MATERIAL_UPDATE, e -> new ListEquipeBackForm(res).show());
-      tb.addMaterialCommandToSideMenu("Ajouter un coach", FontImage.MATERIAL_ADD, e -> new AddCoachForm(res).show());
+                tb.addMaterialCommandToSideMenu("ListJeu", FontImage.MATERIAL_UPDATE, e -> new ListJeuBackForm(res).show());
+
+        tb.addMaterialCommandToSideMenu("Ajouter un coach", FontImage.MATERIAL_ADD, e -> new AddCoachForm(res).show());
+        tb.addMaterialCommandToSideMenu("Ajouter un Tournoi", FontImage.MATERIAL_ADD, e -> new AddTournoiForm(res).show());
+        tb.addMaterialCommandToSideMenu("Ajouter un Jeu", FontImage.MATERIAL_ADD, e -> new AddJeuForm(res).show());
+
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new SignInForm(res).show());
     }
 }

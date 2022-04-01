@@ -36,7 +36,8 @@ import com.mycompany.myapp.services.ServiceTournoi;
 import java.util.ArrayList;
 import static java.util.Collections.list;
 import java.util.Map;
-
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 public class ListTournoiForm extends BaseForm{
 Form current;
 public ArrayList<Tournoi> Tournois;
@@ -133,14 +134,37 @@ public ArrayList<Tournoi> Tournois;
        SpanLabel sp = new SpanLabel();
        Tournois=ServiceTournoi.getInstance().getAllHotels();
 for (Tournoi e :Tournois)
-{ addButton(res.getImage("F:\\XAMPPPPP\\htdocs\\GitHub\\Gclaim\\public"+e.getImage()),e.getNomTournoi()+ "\n" +e.getDescription()+ "\n" , false, 26, 32);
+{ addButton(res.getImage("news-item-1.jpg"),e.getNomTournoi()+ "\n" +e.getDescription()+ "\n" , false, 26, 32);
       //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
+            Label Modif =new Label("Rejoindre un Tournoi");
 
+     Modif.setUIID("NewsTopLine");
+Style modifStyle =new Style(Modif.getUnselectedStyle());
+modifStyle.setFgColor(0xc24400);
+FontImage mfontimage=FontImage.createMaterial(FontImage.MATERIAL_ADD,modifStyle);
+Modif.setIcon(mfontimage);
+Modif.setTextPosition(LEFT);
+addStringValue("", BoxLayout.encloseY(Modif));
+
+Modif.addPointerPressedListener(new ActionListener() {
+       public void actionPerformed(ActionEvent evt) {
+                
+                    ServiceTournoi.getInstance().rejoindre(e.getId(),SessionManager.getId());
+
+                };
+
+            
+       } );
       
 }
  // add(sp);
     }
-    
+      private void addStringValue(String s, Component v) {
+        add(BorderLayout.west(new Label(s, "PaddedLabel")).
+                add(BorderLayout.CENTER, v));
+        add(createLineSeparator(0xeeeeee));
+
+    }
     private void updateArrowPosition(Button b, Label arrow) {
         arrow.getUnselectedStyle().setMargin(LEFT, b.getX() + b.getWidth() / 2 - arrow.getWidth() / 2);
         arrow.getParent().repaint();
