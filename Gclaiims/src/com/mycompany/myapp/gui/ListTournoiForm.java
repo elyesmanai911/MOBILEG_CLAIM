@@ -133,7 +133,7 @@ public ArrayList<Tournoi> Tournois;
        SpanLabel sp = new SpanLabel();
        Tournois=ServiceTournoi.getInstance().getAllHotels();
 for (Tournoi e :Tournois)
-{ addButton(res.getImage("news-item-1.jpg"),e.getNomTournoi()+ "\n" +e.getDescription()+ "\n" , false, 26, 32);
+{ addButton(res.getImage("F:\\XAMPPPPP\\htdocs\\GitHub\\Gclaim\\public"+e.getImage()),e.getNomTournoi()+ "\n" +e.getDescription()+ "\n" , false, 26, 32);
       //  sp.setText(sp.getText()+"\n"+e.getDescription().toString());
 
       
