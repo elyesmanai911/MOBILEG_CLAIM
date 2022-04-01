@@ -4,7 +4,40 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/souma/Documents/NetBeansProjects/Gclaiims/Gclaiims/src/com/mycompany/myapp/services/ServiceEquipe.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ListCoachBackForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/AddCoachForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ListUserBackForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/Tournoi.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/AddTournoiForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/SimpleUtilisateur.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceUtilisateur.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/AddJeuForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ListJeuBackForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceEquipe.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceTournoi.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/Utilisateur.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/SignInForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ListTournoiBackForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/SignUpForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/Equipe.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ListTournoiForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ListEquipeForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/coach.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/utils/Statics.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/SessionManager.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/NewsfeedForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ProfileForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/BackForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceJeu.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ModifTournoiForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/MDPoublieForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ListEquipeBackForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/WalkthruForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/BaseFormBack.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ModifEquipeForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/Jeu.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/addEquipeForm.java</file>
+            <file>file:/C:/Users/elyes/Documents/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceUser.java</file>
         </group>
     </open-files>
 </project-private>

@@ -29,6 +29,8 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.services.ServiceUser;
+import com.mycompany.myapp.services.ServiceUtilisateur;
 
 /**
  * Sign in UI
@@ -56,22 +58,29 @@ public class SignInForm extends BaseForm {
         password.setSingleLineTextArea(false);
         Button signIn = new Button("Sign In");
         Button signUp = new Button("Sign Up");
+ Button clickici = new Button("click içi");
         signUp.addActionListener(e -> new SignUpForm(res).show());
         signUp.setUIID("Link");
+clickici.setUIID("Link");
         Label doneHaveAnAccount = new Label("Don't have an account?");
-        
+        Label mdpoublie = new Label("Mot de passe oublié?");
         Container content = BoxLayout.encloseY(
                 new FloatingHint(username),
                 createLineSeparator(),
                 new FloatingHint(password),
                 createLineSeparator(),
                 signIn,
-                FlowLayout.encloseCenter(doneHaveAnAccount, signUp)
+                FlowLayout.encloseCenter(doneHaveAnAccount, signUp),
+FlowLayout.encloseCenter(mdpoublie,clickici)
         );
         content.setScrollableY(true);
         add(BorderLayout.SOUTH, content);
         signIn.requestFocus();
-        signIn.addActionListener(e -> new NewsfeedForm(res).show());
+        signIn.addActionListener((e)->{
+ServiceUtilisateur.getInstance().signin(username, password, res);});
+ clickici.addActionListener((e)->{
+new MDPoublieForm(res).show();
+});
     }
     
 }

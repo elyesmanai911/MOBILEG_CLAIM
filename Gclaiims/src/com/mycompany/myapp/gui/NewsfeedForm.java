@@ -67,8 +67,8 @@ public class NewsfeedForm extends BaseForm {
 
         Label spacer1 = new Label();
         Label spacer2 = new Label();
-        addTab(swipe, res.getImage("news-item.jpg"), spacer1, "15 Likes  ", "85 Comments", "Integer ut placerat purued non dignissim neque. ");
-        addTab(swipe, res.getImage("dog.jpg"), spacer2, "100 Likes  ", "66 Comments", "Dogs are cute: story at 11");
+        addTab(swipe, res.getImage("cg-5.jpg"), spacer1, "15 Likes  ", "85 Comments", "Rejoindre une équipe pour participer aux tournois ");
+        addTab(swipe, res.getImage("cg-10.jpg"), spacer2, "100 Likes  ", "66 Comments", "les Equipes de GCLAIM");
                 
         swipe.setUIID("Container");
         swipe.getContentPane().setUIID("Container");
@@ -113,14 +113,16 @@ public class NewsfeedForm extends BaseForm {
         all.setUIID("SelectBar");
         RadioButton Equipe = RadioButton.createToggle("Equipe", barGroup);
         Equipe.setUIID("SelectBar");
-        RadioButton popular = RadioButton.createToggle("Popular", barGroup);
-        popular.setUIID("SelectBar");
+        RadioButton Tournoi = RadioButton.createToggle("Tournoi", barGroup);
+        Tournoi.setUIID("SelectBar");
+        RadioButton Jeu = RadioButton.createToggle("Jeu", barGroup);
+        Equipe.setUIID("SelectBar");
         RadioButton myFavorite = RadioButton.createToggle("My Favorites", barGroup);
         myFavorite.setUIID("SelectBar");
         Label arrow = new Label(res.getImage("news-tab-down-arrow.png"), "Container");
         
         add(LayeredLayout.encloseIn(
-                GridLayout.encloseIn(4, all, Equipe, popular, myFavorite),
+                GridLayout.encloseIn(4, all, Equipe, Tournoi,Jeu, myFavorite),
                 FlowLayout.encloseBottom(arrow)
         ));
         
@@ -132,7 +134,8 @@ public class NewsfeedForm extends BaseForm {
         });
         bindButtonSelection(all, arrow);
         bindButtonSelection(Equipe, arrow);
-        bindButtonSelection(popular, arrow);
+        bindButtonSelection(Tournoi, arrow);
+         bindButtonSelection(Jeu, arrow);
         bindButtonSelection(myFavorite, arrow);
         
         // special case for rotation
@@ -147,6 +150,14 @@ public class NewsfeedForm extends BaseForm {
         addButton(res.getImage("news-item-4.jpg"), "Pellentesque non lorem diam. Proin at ex sollicia.", false, 11, 9);
         Equipe.addActionListener( (e) -> {
             new ListEquipeForm(current,res).show();
+
+        });
+        Tournoi.addActionListener( (e) -> {
+            new ListTournoiForm(current,res).show();
+
+        });
+        Jeu.addActionListener( (e) -> {
+            new ListJeuForm(current,res).show();
 
         });
     }
