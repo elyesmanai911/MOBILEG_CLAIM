@@ -27,6 +27,7 @@ public class MyApplication {
 
     public void init(Object context) {
         // use two network threads instead of one
+        System.out.println("working");
         updateNetworkThreadCount(2);
 
         theme = UIManager.initFirstTheme("/theme");

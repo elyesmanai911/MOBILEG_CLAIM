@@ -27,11 +27,13 @@ import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.layouts.LayeredLayout;
 import com.codename1.ui.layouts.Layout;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.util.Resources;
+import java.io.IOException;
 
 /**
  * Base class for the forms with common functionality
@@ -82,16 +84,63 @@ public class BaseFormBack extends Form {
                         new Label(res.getImage("profile-pic.jpg"), "PictureWhiteBackgrond"))
         ));
         
-        tb.addMaterialCommandToSideMenu("ListUtilisateur", FontImage.MATERIAL_UPDATE, e -> new ListUserBackForm(res).show());
-        tb.addMaterialCommandToSideMenu("ListCoach", FontImage.MATERIAL_UPDATE, e -> new ListCoachBackForm(res).show());
-        tb.addMaterialCommandToSideMenu("ListTournoi", FontImage.MATERIAL_UPDATE, e -> new ListTournoiBackForm(res).show());
-        tb.addMaterialCommandToSideMenu("ListEquipe", FontImage.MATERIAL_UPDATE, e -> new ListEquipeBackForm(res).show());
-                tb.addMaterialCommandToSideMenu("ListJeu", FontImage.MATERIAL_UPDATE, e -> new ListJeuBackForm(res).show());
+          
+          
+         
+        tb.addMaterialCommandToSideMenu("ListUtilisateur", FontImage.MATERIAL_VIEW_LIST, e -> new ListUserBackForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListCoach", FontImage.MATERIAL_VIEW_LIST, e -> new ListCoachBackForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListEquipe", FontImage.MATERIAL_VIEW_LIST, e -> new ListEquipeBackForm(res).show());
+tb.addMaterialCommandToSideMenu("ListTournoi", FontImage.MATERIAL_VIEW_LIST, e -> new ListTournoiBackForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListJeu", FontImage.MATERIAL_VIEW_LIST, e -> new ListJeuBackForm(res).show());
+  tb.addMaterialCommandToSideMenu("ListRdv", FontImage.MATERIAL_VIEW_LIST, e -> new ListRdvBackForm(res).show());
 
-        tb.addMaterialCommandToSideMenu("Ajouter un coach", FontImage.MATERIAL_ADD, e -> new AddCoachForm(res).show());
-        tb.addMaterialCommandToSideMenu("Ajouter un Tournoi", FontImage.MATERIAL_ADD, e -> new AddTournoiForm(res).show());
-        tb.addMaterialCommandToSideMenu("Ajouter un Jeu", FontImage.MATERIAL_ADD, e -> new AddJeuForm(res).show());
+        tb.addMaterialCommandToSideMenu("ListProduit", FontImage.MATERIAL_VIEW_LIST, e -> {
+            try {
+                new ListProductsForm(this.getComponentForm(),res).show();
+            } catch (IOException ex) {
+            }
+        });
+        tb.addMaterialCommandToSideMenu("ListCategories", FontImage.MATERIAL_VIEW_LIST, e -> {
+            try {
+                new ListCategoriesForm(this.getComponentForm(),res).show();
+            } catch (IOException ex) {
+            }
+        });
 
+        tb.addMaterialCommandToSideMenu("ListCommande", FontImage.MATERIAL_VIEW_LIST, e -> new ListCommandeBackForm(res).show());
+
+tb.addMaterialCommandToSideMenu("Article", FontImage.MATERIAL_VIEW_LIST, e -> {
+            try {
+                new ListArticleBackForm(this.getComponentForm(),res).show();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        });
+
+tb.addMaterialCommandToSideMenu("Commentaires", FontImage.MATERIAL_VIEW_LIST, e -> {
+            try {
+                new ListCommentaireBackForm(this.getComponentForm(),res).show();
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
+        });
+      tb.addMaterialCommandToSideMenu("Ajouter un coach", FontImage.MATERIAL_ADD, e -> new AddCoachForm(res).show());
+      tb.addMaterialCommandToSideMenu("Ajouter un produit", FontImage.MATERIAL_ADD, (ActionEvent e) -> {
+                new AddProduitForm(this.getComponentForm(),res).show();
+            
+        });
+       tb.addMaterialCommandToSideMenu("Ajouter une categorie", FontImage.MATERIAL_ADD, (ActionEvent e) -> {
+                new AddCategorieForm(this.getComponentForm(),res).show();
+            
+        });
+ tb.addMaterialCommandToSideMenu("Ajouter un tournoi", FontImage.MATERIAL_ADD, e -> new AddTournoiForm(res).show());
+ tb.addMaterialCommandToSideMenu("Ajouter un jeu", FontImage.MATERIAL_ADD, e -> new AddJeuForm(res).show());
+tb.addMaterialCommandToSideMenu("add Article", FontImage.MATERIAL_ADD, (ActionEvent e) -> {
+                new AddArticleForm(this.getComponentForm(),res).show();
+            
+        });
         tb.addMaterialCommandToSideMenu("Logout", FontImage.MATERIAL_EXIT_TO_APP, e -> new SignInForm(res).show());
+
     }
+
 }

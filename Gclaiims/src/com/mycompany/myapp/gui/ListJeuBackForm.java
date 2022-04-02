@@ -68,7 +68,7 @@ Label Modiff =new Label("Modifier un Jeu");
 Modiff.setUIID("NewsTopLine");
 Style modiffStyle =new Style(Modiff.getUnselectedStyle());
 modiffStyle.setFgColor(0xc24400);
-FontImage mffontimage=FontImage.createMaterial(FontImage.MATERIAL_DELETE,modiffStyle);
+FontImage mffontimage=FontImage.createMaterial(FontImage.MATERIAL_EDIT,modiffStyle);
 Modiff.setIcon(mffontimage);
 Modiff.setTextPosition(LEFT);
 addStringValue("", BoxLayout.encloseY(Modiff));

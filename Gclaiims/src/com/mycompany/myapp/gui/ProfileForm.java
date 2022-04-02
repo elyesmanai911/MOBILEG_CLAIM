@@ -107,8 +107,12 @@ public class ProfileForm extends BaseForm {
         addStringValue("fullname", fullname);
         Button modif = new Button("modifier votre profile");
         Button next = new Button("Créer une equipe");
+Button coach = new Button("Devenir un Coach");
+ Button panier = new Button("panier");
         addStringValue("", BoxLayout.encloseY(next));
         addStringValue("", BoxLayout.encloseY(modif));
+addStringValue("", BoxLayout.encloseY(coach));
+ addStringValue("", BoxLayout.encloseY(panier));
         next.addActionListener(e -> new addEquipeForm(res).show());
   modif.addActionListener(new ActionListener() {
        public void actionPerformed(ActionEvent evt) {
@@ -131,6 +135,12 @@ public class ProfileForm extends BaseForm {
 
             }
         });
+
+                    panier.addActionListener( (e) -> {
+            new PanierForm(current,res).show();
+
+        });
+  coach.addActionListener(e -> new addProfilForm(res).show());
 }
 
     private void addStringValue(String s, Component v) {

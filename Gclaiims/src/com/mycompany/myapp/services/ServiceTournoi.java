@@ -13,6 +13,7 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
+import com.mycompany.myapp.entities.Equipe;
 import com.mycompany.myapp.entities.Tournoi;
 import com.mycompany.myapp.utils.Statics;
 import java.io.IOException;
@@ -153,6 +154,24 @@ public ArrayList<Tournoi> parseTournois(String jsonText) {
         });
         NetworkManager.getInstance().addToQueueAndWait(con);
 
+    }
+
+public ArrayList<Tournoi> getAllTournois(Equipe e) {
+       
+ req = new ConnectionRequest();
+        String url = Statics.BASE_URL +"MemebreTournoi/"+e.getId();
+        System.out.println("===>" + url);
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                Tournois = parseTournois(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return Tournois;
     }
     }
 
