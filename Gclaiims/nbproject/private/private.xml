@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
-    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-<<<<<<< Updated upstream
         <group>
-            <file>file:/C:/Users/azizk/Desktop/Gclaiims/src/com/mycompany/myapp/gui/BaseFormBack.java</file>
-            <file>file:/C:/Users/azizk/Desktop/Gclaiims/src/com/mycompany/myapp/gui/ListProductsForm.java</file>
-            <file>file:/C:/Users/azizk/Desktop/Gclaiims/src/com/mycompany/myapp/gui/SignInForm.java</file>
-            <file>file:/C:/Users/azizk/Desktop/Gclaiims/src/com/mycompany/myapp/services/ServiceUtilisateur.java</file>
+            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/coach.java</file>
+            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceUtilisateur.java</file>
+            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/SimpleUtilisateur.java</file>
+            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceUser.java</file>
+            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/Equipe.java</file>
+            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/Utilisateur.java</file>
         </group>
-=======
-        <group/>
->>>>>>> Stashed changes
     </open-files>
 </project-private>

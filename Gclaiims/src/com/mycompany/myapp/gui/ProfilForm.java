@@ -172,7 +172,8 @@ System.out.println(e.getgame());
  // add(sp);
 if(SessionManager.getUserName().equals(e.getUsername()) )
 {
- Label Modif =new Label("MODIFIER VOTRE Profile ");
+    System.out.println("fffffff");
+    Label Modif =new Label("MODIFIER VOTRE PROFIL");
 Modif.setUIID("NewsTopLine");
 Style modifStyle =new Style(Modif.getUnselectedStyle());
 modifStyle.setFgColor(0xf7ad02);
@@ -183,6 +184,25 @@ Modif.setTextPosition(LEFT);
 
 addStringValue("", BoxLayout.encloseY(Modif));
 Modif.addPointerPressedListener(ll->new ModifProfilForm(res,e).show());
+    Label Modife =new Label("Supprimer votre profil");
+Modife.setUIID("NewsTopLine");
+Style modifeStyle =new Style(Modife.getUnselectedStyle());
+modifeStyle.setFgColor(0xc24400);
+FontImage mfontimagee=FontImage.createMaterial(FontImage.MATERIAL_DELETE,modifeStyle);
+Modife.setIcon(mfontimagee);
+Modife.setTextPosition(LEFT);
+
+
+addStringValue("", BoxLayout.encloseY(Modife));
+Modife.addPointerPressedListener(new ActionListener() {
+       public void actionPerformed(ActionEvent evt) {
+                
+                    ServiceProfil.getInstance().Supprimer(e.getId());
+
+                };
+
+            
+       } );
 }
 else 
 {
