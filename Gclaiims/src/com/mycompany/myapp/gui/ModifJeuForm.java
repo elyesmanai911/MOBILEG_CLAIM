@@ -95,7 +95,7 @@ public class ModifJeuForm extends BaseFormBack {
                     Dialog.show("Alert", "Please fill all the fields", new Command("OK"));
                 } else {
                     try {
-                        Jeu h = new Jeu(to.getId(),nomjeu.getText(), description.getText(),createur.getCloudBoundProperty());
+                        Jeu h = new Jeu(to.getId(),nomjeu.getText(), description.getText(),createur.getText());
                         if (ServiceJeu.getInstance().updatejeu(h)) {
                             Dialog.show("Success update", "Connection accepted", new Command("OK"));
                         } else {

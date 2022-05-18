@@ -3,12 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/coach.java</file>
-            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceUtilisateur.java</file>
-            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/SimpleUtilisateur.java</file>
             <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceUser.java</file>
-            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/Equipe.java</file>
-            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/entities/Utilisateur.java</file>
+            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/gui/ModifJeuForm.java</file>
+            <file>file:/C:/xampp/htdocs/MOBILEG_CLAIM/Gclaiims/src/com/mycompany/myapp/services/ServiceJeu.java</file>
         </group>
     </open-files>
 </project-private>

@@ -82,7 +82,7 @@ public boolean updatejeu(Jeu h) {
       
     
         req.addArgument("description", h.getDescription()+"");
-             req.addArgument("Createur", h.getImage()+"");
+             req.addArgument("createur", h.getCreateur()+"");
        
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
